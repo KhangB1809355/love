@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#00000f">
+<title>Vũ Trụ Của Em</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;600&family=Great+Vibes&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#00000f;color:#fff;font-family:'Raleway',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* ── UNIVERSE ── */
+#universe{position:relative;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#stars-canvas{position:absolute;inset:0;pointer-events:none}
+#orbit-container{position:absolute;inset:0;pointer-events:none}
+#orbit-container .photo-item{pointer-events:auto}
+
+/* ── TITLE ── */
+#title-wrap{position:absolute;top:28px;left:50%;transform:translateX(-50%);text-align:center;z-index:30;pointer-events:none}
+#title-wrap h1{font-family:'Cinzel',serif;font-size:clamp(13px,1.9vw,21px);font-weight:400;letter-spacing:10px;text-transform:uppercase;color:rgba(255,150,180,.78);text-shadow:0 0 28px rgba(255,80,140,.65)}
+#title-wrap p{margin-top:8px;font-family:'Great Vibes',cursive;font-size:clamp(16px,2.2vw,24px);letter-spacing:2px;color:rgba(255,150,180,.45)}
+
+/* ── HEART CENTER ── */
+#heart-wrap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:20;pointer-events:none}
+.corona{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,60,120,.15) 0%,transparent 70%);animation:pulse 3s ease-in-out infinite}
+.corona-1{width:320px;height:320px;animation-delay:0s}
+.corona-2{width:220px;height:220px;animation-delay:.9s}
+#heart-canvas{position:relative;z-index:2;display:block;filter:drop-shadow(0 0 18px #ff1a6e) drop-shadow(0 0 40px rgba(255,30,100,.6))}
+@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}50%{transform:translate(-50%,-50%) scale(1.2);opacity:1}}
+
+/* ── ORBIT RINGS ── */
+.ring-circle{position:absolute;top:50%;left:50%;border-radius:50%;border:1.5px solid rgba(255,120,170,.45);box-shadow:0 0 8px rgba(255,100,160,.25),inset 0 0 8px rgba(255,100,160,.08);transform:translate(-50%,-50%);pointer-events:none}
+.ring-label{position:absolute;color:rgba(255,160,190,.6);font-size:10px;letter-spacing:3px;font-family:'Cinzel',serif;pointer-events:none;transform:translateY(-50%);text-shadow:0 0 6px rgba(255,120,170,.5)}
+/* ── SPACE ORBIT ITEMS ── */
+.sp-item{position:absolute;pointer-events:none;user-select:none;line-height:1;transform:translate(-50%,-50%)}
+.sp-star{color:rgba(255,255,220,.88);text-shadow:0 0 4px #fff,0 0 10px rgba(255,240,160,.8),0 0 20px rgba(255,220,120,.4)}
+.sp-planet{filter:drop-shadow(0 0 6px rgba(255,160,100,.7))}
+.sp-galaxy{filter:drop-shadow(0 0 8px rgba(180,100,255,.8))}
+.sp-comet{filter:drop-shadow(0 0 6px rgba(255,210,80,.85))}
+@keyframes sp-twinkle{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.35)}}
+
+/* ── MUSIC BUTTON ── */
+#music-btn{position:fixed;bottom:24px;right:24px;z-index:9000;width:54px;height:54px;border-radius:50%;background:linear-gradient(145deg,#9b2580,#3d0860);border:2px solid rgba(255,140,220,.5);box-shadow:0 0 22px rgba(210,60,190,.5),0 6px 20px rgba(0,0,0,.55);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;backdrop-filter:blur(10px);transition:transform .2s,box-shadow .2s;outline:none}
+#music-btn:hover{transform:scale(1.1);box-shadow:0 0 32px rgba(255,80,220,.7),0 6px 22px rgba(0,0,0,.55)}
+#music-btn.playing{animation:mbtn-pulse 2s ease-in-out infinite}
+@keyframes mbtn-pulse{0%,100%{box-shadow:0 0 22px rgba(210,60,190,.5),0 6px 20px rgba(0,0,0,.55)}50%{box-shadow:0 0 40px rgba(255,80,230,.85),0 0 70px rgba(210,40,190,.35),0 6px 20px rgba(0,0,0,.55)}}
+.music-note{position:fixed;pointer-events:none;color:rgba(255,170,230,.9);font-size:15px;animation:note-rise 2s ease-out forwards;z-index:8999}
+@keyframes note-rise{0%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)}100%{opacity:0;transform:translateY(-65px) scale(.65) rotate(20deg)}}
+/* ── PHOTO ITEMS ── */
+.photo-item{display:none}
+.photo-item img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.photo-item:hover{box-shadow:0 0 22px rgba(255,80,140,.9),0 0 44px rgba(255,40,100,.45);border-color:#ff5090;z-index:500!important}
+
+/* ── PARTICLES (center emitter) ── */
+.particle{position:absolute;pointer-events:none;animation:float-up linear forwards;will-change:transform,opacity}
+@keyframes float-up{0%{opacity:.9;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}}
+
+/* ── DANCING HEARTS CANVAS ── */
+#dance-canvas{position:absolute;inset:0;pointer-events:none;z-index:8}
+
+/* ── SCROLL HINT ── */
+#scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.28);animation:bounce 2.5s ease-in-out infinite;z-index:30}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);opacity:.3}50%{transform:translateX(-50%) translateY(-7px);opacity:.7}}
+
+/* ── TIMELINE ── */
+#timeline{padding:100px 6vw 140px;background:linear-gradient(180deg,#00000f 0%,#060012 45%,#0c0020 100%);position:relative}
+
+/* Vertical glow line */
+#timeline::before{content:'';position:absolute;left:calc(6vw + 3px);top:220px;bottom:140px;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,60,120,.35) 8%,rgba(255,60,120,.2) 92%,transparent);pointer-events:none}
+
+/* Section title with decorative flanking lines */
+#timeline > h2{font-family:'Cinzel',serif;text-align:center;font-size:clamp(15px,2.4vw,24px);letter-spacing:12px;text-transform:uppercase;color:rgba(255,110,165,.9);text-shadow:0 0 30px rgba(255,60,128,.7),0 0 60px rgba(255,60,128,.25);margin-bottom:90px;font-weight:400;display:flex;align-items:center;justify-content:center;gap:22px}
+#timeline > h2::before,#timeline > h2::after{content:'';flex:1;max-width:130px;height:1px;background:linear-gradient(to right,transparent,rgba(255,80,140,.45))}
+#timeline > h2::after{background:linear-gradient(to left,transparent,rgba(255,80,140,.45))}
+
+/* Year block — starts hidden, slides in on scroll */
+.year-block{margin-bottom:72px;padding-left:36px;border-left:1px solid rgba(255,60,120,.15);position:relative;opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease,border-color .3s}
+.year-block.in-view{opacity:1;transform:translateY(0)}
+.year-block:hover{border-color:rgba(255,80,140,.35)}
+
+/* Glowing dot marker */
+.year-block::before{content:'';position:absolute;left:-5px;top:20px;width:9px;height:9px;border-radius:50%;background:rgba(255,60,128,.85);box-shadow:0 0 10px rgba(255,60,128,.9),0 0 22px rgba(255,60,128,.45);transition:box-shadow .3s}
+.year-block:hover::before{box-shadow:0 0 14px rgba(255,80,150,1),0 0 32px rgba(255,60,128,.65)}
+
+/* Year tag — outline style */
+.year-tag{font-family:'Cinzel',serif;font-size:clamp(34px,6vw,68px);font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(255,70,130,.28);letter-spacing:14px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid rgba(255,80,140,.1);line-height:1.1;display:flex;align-items:baseline;gap:16px}
+.year-tag::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(255,80,140,.12),transparent);align-self:center}
+
+/* Photo grid */
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px}
+.grid-item{
+  aspect-ratio:1;border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid rgba(255,100,160,.15);
+  position:relative;
+  background:#0a0014;
+  transition:transform .3s cubic-bezier(.175,.885,.32,1.275),
+             box-shadow .3s ease, border-color .3s ease;
+}
+.grid-item img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .55s ease, filter .3s ease;
+}
+/* Shine sweep */
+.grid-item::before{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  border-radius:14px;
+  background:linear-gradient(118deg,transparent 22%,rgba(255,255,255,.18) 50%,transparent 78%);
+  background-size:240% 100%;background-position:-100% 0;
+  transition:background-position .55s ease;
+}
+/* Heart overlay */
+.grid-item::after{
+  content:'♥';position:absolute;inset:0;z-index:2;pointer-events:none;
+  border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:34px;color:rgba(255,100,160,0);background:rgba(0,0,20,0);
+  text-shadow:none;
+  transition:color .3s ease,background .3s ease,text-shadow .3s ease;
+}
+.grid-item:hover{
+  transform:scale(1.07) translateY(-5px);
+  box-shadow:0 0 22px rgba(255,70,140,.75),0 0 50px rgba(255,30,100,.3),0 12px 32px rgba(0,0,0,.5);
+  border-color:rgba(255,130,180,.55);
+}
+.grid-item:hover img{transform:scale(1.12);filter:brightness(1.05);}
+.grid-item:hover::before{background-position:190% 0;}
+.grid-item:hover::after{
+  color:rgba(255,130,175,.92);background:rgba(0,0,20,.4);
+  text-shadow:0 0 20px rgba(255,60,120,1),0 0 40px rgba(255,60,120,.55);
+}
+
+/* ── FEATURED PHOTO ── */
+#featured{padding:70px 0 80px;background:linear-gradient(180deg,#0c0020,#06000f);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;position:relative;overflow:hidden}
+#featured::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(255,40,120,.07),transparent);pointer-events:none}
+#featured-frame{position:relative;width:clamp(240px,38vw,400px)}
+#featured-frame img{width:100%;border-radius:20px;border:1px solid rgba(255,110,170,.35);box-shadow:0 0 50px rgba(255,50,130,.28),0 0 100px rgba(255,30,100,.1),0 24px 60px rgba(0,0,0,.65);display:block;animation:feat-float 7s ease-in-out infinite}
+@keyframes feat-float{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-12px) rotate(.5deg)}}
+#featured-caption{font-family:'Great Vibes',cursive;font-size:clamp(26px,4vw,40px);color:rgba(255,170,210,.8);text-shadow:0 0 24px rgba(255,80,140,.45);text-align:center}
+#featured-sub{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:rgba(255,130,180,.35);text-align:center}
+
+/* ── SECRET BUTTON ── */
+#secret-btn{position:fixed;bottom:24px;left:24px;z-index:9000;width:44px;height:44px;border-radius:50%;background:rgba(0,0,15,.55);border:1px solid rgba(255,100,160,.18);color:rgba(255,100,160,.28);font-size:19px;cursor:pointer;backdrop-filter:blur(8px);transition:all .35s;outline:none;display:flex;align-items:center;justify-content:center}
+#secret-btn:hover{color:rgba(255,110,170,.85);border-color:rgba(255,110,170,.5);box-shadow:0 0 18px rgba(255,80,140,.35)}
+
+/* ── SECRET OVERLAY ── */
+#secret-overlay{position:fixed;inset:0;z-index:99990;background:rgba(0,0,15,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:opacity .65s ease;backdrop-filter:blur(14px)}
+#secret-overlay.show{opacity:1;pointer-events:auto}
+#secret-heart{font-size:78px;animation:sec-beat 1.4s ease-in-out infinite;filter:drop-shadow(0 0 28px #ff3a80)}
+@keyframes sec-beat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+#secret-msg{font-family:'Great Vibes',cursive;font-size:clamp(24px,4.5vw,44px);color:rgba(255,185,215,.92);text-align:center;padding:0 40px;text-shadow:0 0 32px rgba(255,80,140,.5);line-height:1.65;max-width:620px}
+#secret-name{font-family:'Cinzel',serif;font-size:clamp(11px,1.8vw,15px);letter-spacing:6px;color:rgba(255,140,180,.5);text-align:center}
+#secret-close{position:absolute;top:22px;right:30px;font-size:38px;color:rgba(255,255,255,.28);cursor:pointer;line-height:1;transition:color .2s;background:none;border:none;outline:none}
+#secret-close:hover{color:rgba(255,100,160,.8)}
+.sec-spark{position:fixed;pointer-events:none;border-radius:50%;animation:sec-spark-fly var(--d,.8s) ease-out forwards;z-index:99991}
+@keyframes sec-spark-fly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}}
+
+/* ── LIGHTBOX ── */
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+#lightbox.on{display:flex}
+#lb-img{max-width:90vw;max-height:88vh;border-radius:10px;object-fit:contain;box-shadow:0 0 60px rgba(255,80,140,.3);user-select:none}
+#lb-close{position:absolute;top:18px;right:26px;font-size:38px;color:rgba(255,255,255,.5);cursor:pointer;line-height:1;transition:color .2s}
+#lb-close:hover{color:#ff5090}
+#lb-prev,#lb-next{position:absolute;top:50%;transform:translateY(-50%);font-size:52px;color:rgba(255,255,255,.35);cursor:pointer;padding:10px 18px;transition:color .2s;user-select:none}
+#lb-prev{left:8px}#lb-next{right:8px}
+#lb-prev:hover,#lb-next:hover{color:#ff5090}
+#lb-info{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:4px;color:rgba(255,255,255,.38)}
+
+/* ── INTRO OVERLAY ── */
+#intro{position:fixed;inset:0;z-index:9999;background:#00000f;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;transition:opacity 1.2s ease}
+#intro.fade-out{opacity:0;pointer-events:none}
+#intro-heart{font-size:80px;animation:intro-pulse 2s ease-in-out infinite;filter:drop-shadow(0 0 24px #ff3a80)}
+@keyframes intro-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+#intro h2{font-family:'Cinzel',serif;font-size:clamp(18px,3.8vw,30px);letter-spacing:10px;font-weight:400;color:rgba(255,160,190,.82);text-transform:uppercase}
+#intro p{font-family:'Great Vibes',cursive;font-size:clamp(20px,3vw,28px);letter-spacing:2px;color:rgba(255,200,220,.45)}
+#intro-btn{font-family:'Raleway',sans-serif;margin-top:12px;padding:14px 48px;border:1px solid rgba(255,100,160,.5);background:transparent;color:rgba(255,150,180,.85);font-size:12px;letter-spacing:6px;text-transform:uppercase;cursor:pointer;border-radius:40px;transition:all .3s}
+#intro-btn:hover{background:rgba(255,60,120,.15);border-color:#ff5090;color:#fff;box-shadow:0 0 24px rgba(255,60,120,.4)}
+
+/* ── MUSIC PANEL ── */
+#music-wrap{position:fixed;bottom:24px;right:24px;z-index:9000;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+#music-panel{background:linear-gradient(160deg,rgba(22,5,40,.97),rgba(10,2,22,.97));border:1px solid rgba(255,110,200,.22);border-radius:20px;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 40px rgba(180,40,160,.12),inset 0 1px 0 rgba(255,150,220,.08);width:256px;overflow:hidden;transform-origin:bottom right;transform:scale(.88) translateY(6px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s}
+#music-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
+#music-panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 12px;border-bottom:1px solid rgba(255,100,190,.1)}
+#music-panel-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:3px;color:rgba(255,150,210,.55);text-transform:uppercase}
+#music-play-btn{background:linear-gradient(135deg,rgba(200,50,160,.7),rgba(120,20,100,.7));border:1px solid rgba(255,120,210,.4);border-radius:50%;width:30px;height:30px;color:#ffcce8;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;outline:none;box-shadow:0 0 10px rgba(200,50,160,.3)}
+#music-play-btn:hover{background:linear-gradient(135deg,rgba(230,60,180,.85),rgba(150,30,120,.85));box-shadow:0 0 16px rgba(230,60,180,.5);color:#fff}
+#now-playing{padding:12px 16px 10px;border-bottom:1px solid rgba(255,100,190,.08);background:rgba(255,80,180,.04)}
+#np-label{font-size:8.5px;letter-spacing:3px;color:rgba(255,130,200,.4);font-family:'Cinzel',serif;margin-bottom:6px}
+#np-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#np-title{font-size:12.5px;color:rgba(255,190,230,.85);font-family:'Raleway',sans-serif;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+#np-eq{display:flex;align-items:flex-end;gap:2.5px;height:16px;flex-shrink:0}
+#np-eq span{width:3px;border-radius:2px;background:linear-gradient(to top,#c030a0,#ff80d0);opacity:0}
+#np-eq.active span{opacity:1}
+#np-eq.active span:nth-child(1){animation:eq1 .7s ease-in-out infinite}
+#np-eq.active span:nth-child(2){animation:eq2 .7s ease-in-out infinite .12s}
+#np-eq.active span:nth-child(3){animation:eq3 .7s ease-in-out infinite .24s}
+#np-eq.active span:nth-child(4){animation:eq1 .7s ease-in-out infinite .36s}
+@keyframes eq1{0%,100%{height:3px}50%{height:14px}}
+@keyframes eq2{0%,100%{height:8px}50%{height:16px}}
+@keyframes eq3{0%,100%{height:12px}50%{height:5px}}
+#track-list{padding:8px 0 6px}
+.track-item{padding:10px 16px;cursor:pointer;font-size:12.5px;color:rgba(255,190,230,.5);font-family:'Raleway',sans-serif;display:flex;align-items:center;gap:10px;transition:background .18s,color .18s;letter-spacing:.3px;position:relative}
+.track-item:hover{background:rgba(255,80,180,.08);color:rgba(255,220,245,.9)}
+.track-item.active{background:rgba(255,80,180,.1);color:#ffb8e2}
+.track-item::before{content:'♪';font-size:11px;opacity:.3;flex-shrink:0;transition:opacity .2s}
+.track-item.active::before{content:'♬';opacity:.9;color:#ff80c8}
+.track-item.active.playing-now::before{animation:ti-pulse 1s ease-in-out infinite}
+@keyframes ti-pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+.track-item .ti-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── VOLUME SLIDER ── */
+#vol-wrap{position:fixed;bottom:82px;right:22px;z-index:500;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;pointer-events:none;transition:opacity .3s}
+#vol-wrap.show{opacity:1;pointer-events:auto}
+#vol-label{font-size:10px;letter-spacing:2px;color:rgba(255,150,180,.6)}
+#vol-slider{writing-mode:vertical-lr;direction:rtl;width:4px;height:80px;cursor:pointer;accent-color:#ff3a80;appearance:slider-vertical}
+
+/* ── PRELOADER ── */
+#preloader{position:fixed;inset:0;z-index:99999;background:#00000f;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .8s ease}
+#preloader.hidden{opacity:0;pointer-events:none}
+#pre-heart{font-size:48px;animation:pre-beat .8s ease-in-out infinite;filter:drop-shadow(0 0 16px #ff3a80)}
+@keyframes pre-beat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+#pre-bar-wrap{width:180px;height:2px;background:rgba(255,100,160,.15);border-radius:2px;overflow:hidden}
+#pre-bar{height:100%;width:0%;background:linear-gradient(to right,#ff3a80,#ff69b4);border-radius:2px;transition:width .3s ease}
+#pre-text{font-family:'Raleway',sans-serif;font-size:10px;letter-spacing:4px;color:rgba(255,150,180,.4)}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  #title-wrap h1{font-size:12px;letter-spacing:5px}
+  #title-wrap p{font-size:18px}
+  #love-counter{top:12px;right:12px}
+  #love-counter .lc-days{font-size:15px}
+  #love-counter .lc-hms{font-size:9px}
+  #love-quote{display:none}
+  #moon{display:none}
+  .photo-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
+  #lb-prev,#lb-next{font-size:38px;padding:8px 10px}
+  #music-btn{width:40px;height:40px;font-size:15px;bottom:18px;right:18px}
+  #love-letter{padding:24px 20px}
+  #love-letter-text{font-size:18px}
+}
+@media(max-width:380px){
+  .photo-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+}
+
+/* ── 1. PETALS ── */
+.petal{position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity}
+
+/* ── 2. LOVE COUNTER ── */
+#love-counter{position:fixed;top:18px;right:26px;z-index:400;text-align:right;pointer-events:none}
+#love-counter .lc-label{font-family:'Great Vibes',cursive;font-size:14px;color:rgba(255,160,190,.55);line-height:1}
+#love-counter .lc-days{font-family:'Cinzel',serif;font-size:20px;font-weight:600;color:rgba(255,110,160,.72);text-shadow:0 0 18px rgba(255,60,120,.45);letter-spacing:2px;line-height:1.2}
+#love-counter .lc-hms{font-family:'Raleway',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(255,140,170,.38);margin-top:2px}
+
+/* ── 3. TYPEWRITER LETTER ── */
+#love-letter{max-width:620px;margin:0 auto 80px;padding:36px 44px;text-align:center;border:1px solid rgba(255,100,160,.12);border-radius:2px;background:rgba(255,30,90,.03);position:relative;display:none}
+#love-letter::before{content:'✦';position:absolute;top:10px;left:14px;font-size:9px;color:rgba(255,100,160,.25)}
+#love-letter::after{content:'✦';position:absolute;bottom:10px;right:14px;font-size:9px;color:rgba(255,100,160,.25)}
+#love-letter-text{font-family:'Great Vibes',cursive;font-size:clamp(19px,2.8vw,26px);color:rgba(255,160,190,.72);line-height:1.85;min-height:2em}
+.tw-cursor{display:inline-block;width:2px;height:.9em;background:rgba(255,100,160,.7);vertical-align:middle;margin-left:2px;animation:blink-cur .7s step-end infinite}
+@keyframes blink-cur{50%{opacity:0}}
+
+/* ── 4. LOVE QUOTES ── */
+#love-quote{position:fixed;bottom:78px;left:28px;z-index:400;max-width:240px;pointer-events:none;opacity:0;transition:opacity 1.4s ease}
+#love-quote p{font-family:'Great Vibes',cursive;font-size:15px;color:rgba(255,155,185,.52);line-height:1.65;text-shadow:0 0 18px rgba(255,60,120,.25)}
+#love-quote cite{display:block;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:2px;color:rgba(255,120,160,.28);margin-top:5px;font-style:normal}
+
+/* ── 7. MOON ── */
+#moon{position:fixed;top:56px;left:50%;transform:translateX(-50%) translateX(-38vw);z-index:25;pointer-events:none;animation:moon-drift 7s ease-in-out infinite}
+@keyframes moon-drift{0%,100%{transform:translateX(-50%) translateX(-38vw) translateY(0) rotate(-4deg)}50%{transform:translateX(-50%) translateX(-38vw) translateY(-9px) rotate(-1deg)}}
+
+/* ── 8. MILESTONE ── */
+.milestone-item{border-color:rgba(255,200,60,.45)!important;box-shadow:0 0 14px rgba(255,180,0,.28)!important}
+.milestone-badge{position:absolute;top:5px;right:5px;z-index:3;pointer-events:none;background:linear-gradient(135deg,#ffd700,#ffaa00);color:#2a0f00;font-family:'Cinzel',serif;font-size:6.5px;letter-spacing:1px;padding:2px 5px;border-radius:3px;text-transform:uppercase;box-shadow:0 0 8px rgba(255,185,0,.55)}
+
+/* ── 5. FIREWORKS / 6. PARALLAX / CARD REVEAL ── */
+/* ── CARD REVEAL ── */
+@keyframes card-float{0%,100%{transform:scale(1) rotateZ(0deg)}50%{transform:scale(1.03) rotateZ(1.5deg)}}
+@keyframes card-shimmer{0%{background-position:-200% 0}100%{background-position:250% 0}}
+.card-glow-pulse{animation:card-float 3s ease-in-out infinite}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div id="pre-heart">♥</div>
+  <div id="pre-bar-wrap"><div id="pre-bar"></div></div>
+  <div id="pre-text">đang tải...</div>
+</div>
+
+<!-- MOON (feature 7) -->
+<div id="moon">
+  <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="mg" cx="38%" cy="32%">
+        <stop offset="0%" stop-color="#fff9e8"/>
+        <stop offset="100%" stop-color="#ffd89b"/>
+      </radialGradient>
+    </defs>
+    <circle cx="24" cy="22" r="15" fill="url(#mg)" opacity=".88"/>
+    <circle cx="30" cy="18" r="13" fill="#00000f"/>
+  </svg>
+</div>
+
+<!-- LOVE COUNTER (feature 2) -->
+<div id="love-counter">
+  <div class="lc-label">Chúng mình đã bên nhau</div>
+  <div class="lc-days" id="lc-days">···</div>
+  <!-- <div class="lc-days" id="lc-days">···</div> -->
+  <div class="lc-hms"  id="lc-hms">00:00:00</div>
+</div>
+
+<!-- LOVE QUOTE (feature 4) -->
+<div id="love-quote"><p id="lq-text"></p><cite id="lq-cite"></cite></div>
+
+<!-- INTRO -->
+<div id="intro">
+  <div id="intro-heart">♥</div>
+  <h2>Vũ Trụ Của Em</h2>
+  <p>2020 &mdash; 2026</p>
+  <button id="intro-btn">Bước vào vũ trụ</button>
+</div>
+
+<!-- MUSIC PLAYER -->
+<audio id="bgm" loop preload="none"></audio>
+<div id="music-wrap">
+  <div id="music-panel">
+    <div id="music-panel-header">
+      <span id="music-panel-title">♫ NHẠC NỀN</span>
+      <button id="music-play-btn" title="Phát / Dừng">▶</button>
+    </div>
+    <div id="track-list"></div>
+  </div>
+  <button id="music-btn" title="Chọn nhạc">♪</button>
+</div>
+
+<section id="universe">
+  <canvas id="stars-canvas"></canvas>
+
+  <!-- <div id="title-wrap">
+    <h1>Vũ Trụ Của Em</h1>
+    <p>2020 &mdash; 2026</p>
+  </div> -->
+
+  <div id="heart-wrap">
+    <div class="corona corona-1"></div>
+    <div class="corona corona-2"></div>
+    <canvas id="heart-canvas" width="300" height="300" style="overflow:visible"></canvas>
+  </div>
+
+  <div id="orbit-container"></div>
+  <canvas id="dance-canvas"></canvas>
+  <div id="scroll-hint">↓ &nbsp; hành trình của em &nbsp; ↓</div>
+</section>
+
+<!-- FEATURED PHOTO -->
+<section id="featured">
+  <div id="featured-frame">
+    <img id="featured-img" src="" alt=" Thúy Vy">
+  </div>
+  <div id="featured-caption">♥ Thúy Vy ♥</div>
+  <div id="featured-sub">VŨ TRỤ CỦA ANH</div>
+</section>
+
+<!-- SECRET OVERLAY -->
+<button id="secret-btn" title="✦">♥</button>
+<div id="secret-overlay">
+  <button id="secret-close">×</button>
+  <div id="secret-heart">♥</div>
+  <div id="secret-msg">Thúy Vy ơi, từ ngày đầu tiên nhìn thấy em, Khang đã biết mình sẽ không bỏ cuộc. Em có thể chạy đến tận cùng vũ trụ — Khang vẫn sẽ đuổi theo. Vì với Khang, em là điều duy nhất xứng đáng để theo đuổi mãi mãi.</div>
+  <div id="secret-name">— Khang, người sẽ mãi đuổi theo em —</div>
+</div>
+
+<section id="timeline">
+  <h2>Hành Trình</h2>
+  <!-- Love letter (feature 3) injected here by JS -->
+  <div id="love-letter">
+    <div id="love-letter-text"></div>
+  </div>
+</section>
+
+<div id="lightbox">
+  <span id="lb-close">&times;</span>
+  <span id="lb-prev">&#8249;</span>
+  <img id="lb-img" src="" alt="">
+  <span id="lb-next">&#8250;</span>
+  <div id="lb-info"></div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// DATA — exact filenames
+// ════════════════════════════════════════
+const PHOTOS = {
+  2020: [
+    "2020/120196849_192613378973618_3048573387620192544_n.jpg",
+    "2020/120254207_192613358973620_3978068058050704595_n.jpg",
+    "2020/120360040_194192858815670_2050812459005169816_n.jpg"
+  ],
+  2022: [
+    "2022/288186051_565337605034525_5381282528554755313_n.jpg",
+    "2022/288858367_565337585034527_1125249736640217016_n.jpg",
+    "2022/471688137_1125924315642515_5114264895808881283_n.jpg",
+    "2022/472252106_1129402325294714_2107070897044787838_n.jpg",
+    "2022/472297501_1129420638626216_3817357116103003159_n.jpg",
+    "2022/472310473_1129420591959554_6827596051448735634_n.jpg",
+    "2022/472631214_1132071731694440_8200271509968892993_n.jpg",
+    "2022/472740448_1132048991696714_2625388718027150545_n.jpg",
+    "2022/472905416_1132049075030039_3407569355837612063_n.jpg"
+  ],
+  2023: [
+    "2023/350510323_1882468992124101_1552317418915505469_n.jpg",
+    "2023/472631214_1132071731694440_8200271509968892993_n (1).jpg",
+    "2023/472968812_1132071758361104_7517489838734847944_n.jpg",
+    "2023/473275809_1134871551414458_4749241101932507792_n.jpg",
+    "2023/474851446_1146233426944937_2234485592350382922_n.jpg",
+    "2023/474945144_1146842913550655_2470157965899090914_n.jpg",
+    "2023/475081512_1146233400278273_6083707417039936093_n.jpg",
+    "2023/475099254_1143961327172147_3881717684059391168_n.jpg",
+    "2023/475104040_1143971570504456_6130160709413168872_n.jpg",
+    "2023/475186735_1146233040278309_7104002355424214014_n.jpg",
+    "2023/475255604_1146233333611613_1643346771101251304_n.jpg",
+    "2023/475262465_1146233386944941_3692849913652928768_n.jpg",
+    "2023/475277535_1146232170278396_5425963106626747188_n.jpg",
+    "2023/475286327_1146844796883800_2061619357173787176_n.jpg",
+    "2023/475304387_1146844733550473_7669977439893552036_n.jpg",
+    "2023/475307134_1146844706883809_6896450179279296245_n.jpg",
+    "2023/475431118_1146842940217319_7715708611031369341_n.jpg"
+  ],
+  2024: [
+    "2024/475398839_1148493623385584_2838966070308514059_n.jpg",
+    "2024/475420497_1148493300052283_9202577333036173772_n.jpg",
+    "2024/475438788_1148496213385325_3237548992352488774_n.jpg",
+    "2024/475439329_1148493670052246_2649669295764150116_n.jpg",
+    "2024/475440842_1148496200051993_248692717549014806_n.jpg",
+    "2024/475457252_1148493326718947_1649509753655965114_n.jpg",
+    "2024/475458283_1148493633385583_155377722292281914_n.jpg",
+    "2024/475462771_1148493630052250_2642784241293902267_n.jpg",
+    "2024/475464393_1148496240051989_6976255894770067779_n.jpg",
+    "2024/475834362_1148493343385612_1731699662855560683_n.jpg",
+    "2024/480292084_1159873925580887_6000996306547600872_n.jpg",
+    "2024/480300370_1159873932247553_3755250504417993127_n.jpg",
+    "2024/480307738_1160565188845094_6382561572672718797_n.jpg",
+    "2024/480348619_1159873955580884_7577351395717891595_n.jpg",
+    "2024/480642382_1162053555362924_3532535955599998112_n.jpg",
+    "2024/480695866_1159874208914192_2475894297603572741_n.jpg",
+    "2024/481076499_1162053592029587_5398565828871375186_n.jpg",
+    "2024/481107181_1162053588696254_7536167667987488964_n.jpg"
+  ],
+  2025: [
+    "2025/480703084_1165863781648568_5186522132276791167_n.jpg",
+    "2025/481012445_1168756518025961_7934995675310461476_n.jpg",
+    "2025/481174163_1168754824692797_7211825131028700854_n.jpg",
+    "2025/481235416_1165863791648567_9176575015843200324_n.jpg",
+    "2025/481255791_1168752851359661_2291406490838615314_n.jpg",
+    "2025/485158690_1183870713181208_6207160813136239392_n.jpg",
+    "2025/485764863_1183870699847876_1969292864148356039_n.jpg",
+    "2025/485968007_1185570179677928_2135850243649220576_n.jpg",
+    "2025/486068392_1185571929677753_6996522680241829432_n.jpg",
+    "2025/486647844_1185570196344593_6952921194996836440_n.jpg",
+    "2025/491194390_1205416407693305_7955813036483442101_n.jpg",
+    "2025/491404488_1205416327693313_2102666350827887692_n.jpg",
+    "2025/491411790_1205416401026639_350735462057356880_n.jpg",
+    "2025/491525276_1205416364359976_6187571408989014979_n.jpg",
+    "2025/492248724_1205416347693311_5957169614592472272_n.jpg",
+    "2025/512565257_1255112706057008_4840034375559092960_n.jpg",
+    "2025/519413984_1276667800568165_3557382683104867869_n.jpg",
+    "2025/519422537_1276667790568166_3712295514796411293_n.jpg",
+    "2025/520025004_1276667757234836_4172132918530268660_n.jpg",
+    "2025/520174778_1276667827234829_3439130580094125405_n.jpg",
+    "2025/520431742_1276667770568168_2044791087343395617_n.jpg",
+    "2025/540668233_1311654880402790_6297158903906593072_n.jpg",
+    "2025/540701156_1311654840402794_2815422189442269067_n.jpg",
+    "2025/540840864_1311654890402789_8710669120437870226_n.jpg",
+    "2025/540999710_1311654873736124_479792850480983658_n.jpg",
+    "2025/541219438_1311654850402793_4189193251753331585_n.jpg",
+    "2025/541319069_1311654833736128_8524606339891162991_n.jpg",
+    "2025/541448907_1311654787069466_6854151191927484887_n.jpg",
+    "2025/541518910_1311654797069465_4977436512851039744_n.jpg"
+  ],
+  2026: [
+    "2026/634363165_1446983080203302_880001041239169798_n.jpg",
+    "2026/634585187_1446983153536628_7234071434861567026_n.jpg",
+    "2026/634657628_1446983110203299_1781875162136266_n.jpg",
+    "2026/635443763_1446983073536636_232836998176361278_n.jpg",
+    "2026/638548579_1446983133536630_4721259011499928419_n.jpg",
+    "2026/639097670_1446983143536629_9016148842278323028_n.jpg",
+    "2026/639182401_1446983100203300_4039056402104562794_n.jpg",
+    "2026/655683519_1473122674256009_1862779305948218330_n.jpg",
+    "2026/655774792_1473122810922662_3369611723434906166_n.jpg",
+    "2026/655949367_1473122744256002_4448793560159683964_n.jpg",
+    "2026/656014607_1473122667589343_6192372020036121824_n.jpg",
+    "2026/656393246_1473122777589332_6390637539641803841_n.jpg",
+    "2026/656412864_1473122700922673_3164819027484701624_n.jpg",
+    "2026/656732685_1473122717589338_3185158557765047466_n.jpg",
+    "2026/656834338_1473122750922668_4458399875541611863_n.jpg",
+    "2026/656855789_1473122694256007_5977445130210489463_n.jpg",
+    "2026/657605049_1473122827589327_6297679513802646110_n.jpg",
+    "2026/658353853_1477134390521504_2299693877367082748_n.jpg",
+    "2026/662999105_1483964643171812_5243750399314266733_n.jpg",
+    "2026/667210703_1483964623171814_4812823968273956947_n.jpg",
+    "2026/668229943_1483964696505140_2283543381490340397_n.jpg"
+  ]
+};
+
+// Flat list for lightbox navigation (newest first)
+const FLAT = Object.keys(PHOTOS)
+  .map(Number).sort((a,b) => b-a)
+  .flatMap(y => PHOTOS[y].map(p => ({ path: p, year: y })));
+
+// ════════════════════════════════════════
+// STARS
+// ════════════════════════════════════════
+const cnv = document.getElementById('stars-canvas');
+const ctx = cnv.getContext('2d');
+let stars = [], W, H;
+
+function resizeCanvas() {
+  W = cnv.width  = window.innerWidth;
+  H = cnv.height = window.innerHeight;
+}
+
+function initStars() {
+  stars = Array.from({ length: 350 }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.4 + 0.2,
+    phase: Math.random() * Math.PI * 2,
+    speed: Math.random() * 0.0008 + 0.0003
+  }));
+}
+
+function drawStars(t) {
+  ctx.clearRect(0, 0, W, H);
+  stars.forEach(s => {
+    const alpha = ((Math.sin(t * s.speed + s.phase) + 1) / 2) * 0.75 + 0.1;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+    ctx.fill();
+  });
+}
+
+// ════════════════════════════════════════
+// ORBIT SYSTEM
+// ════════════════════════════════════════
+let orbitItems = [];
+let spaceItems = [];
+const container = document.getElementById('orbit-container');
+
+// Ring order: innermost = most recent
+const RING_ORDER = [2026, 2025, 2024, 2023, 2022, 2020];
+// Orbital speed (rad/ms)
+const SPEEDS     = [0.00022, 0.00015, 0.00010, 0.000072, 0.000052, 0.000033];
+// Space orbital speeds (slower, more majestic)
+const SP_SPEEDS  = [0.00016, 0.00011, 0.000075, 0.000053, 0.000036, 0.000022];
+// Space objects per ring (innermost → outermost)
+const RING_OBJECTS = [
+  [{sym:'✦',t:'star',sz:9,d:1.8,dl:0},{sym:'✧',t:'star',sz:8,d:2.2,dl:0.5},{sym:'✦',t:'star',sz:10,d:1.6,dl:1.1},{sym:'✧',t:'star',sz:8,d:2.0,dl:1.7},{sym:'✦',t:'star',sz:9,d:1.9,dl:2.3},{sym:'✧',t:'star',sz:8,d:2.1,dl:2.9}],
+  [{sym:'★',t:'star',sz:12,d:2.5,dl:0},{sym:'✦',t:'star',sz:11,d:2.8,dl:0.9},{sym:'★',t:'star',sz:13,d:2.3,dl:1.8},{sym:'✦',t:'star',sz:10,d:2.6,dl:2.7},{sym:'★',t:'star',sz:12,d:2.4,dl:3.6}],
+  [{sym:'🪐',t:'planet',sz:17,d:4.0,dl:0},{sym:'✦',t:'star',sz:11,d:2.5,dl:1.5},{sym:'☄️',t:'comet',sz:15,d:3.5,dl:3.0},{sym:'✧',t:'star',sz:10,d:2.8,dl:4.5},{sym:'✦',t:'star',sz:12,d:2.2,dl:6.0}],
+  [{sym:'🌌',t:'galaxy',sz:20,d:5.0,dl:0},{sym:'✦',t:'star',sz:12,d:2.6,dl:2.0},{sym:'🌌',t:'galaxy',sz:18,d:4.5,dl:4.0},{sym:'✧',t:'star',sz:11,d:2.9,dl:6.0},{sym:'★',t:'star',sz:13,d:2.4,dl:8.0}],
+  [{sym:'🔴',t:'planet',sz:15,d:4.2,dl:0},{sym:'★',t:'star',sz:12,d:2.6,dl:1.6},{sym:'🪐',t:'planet',sz:19,d:4.8,dl:3.2},{sym:'✦',t:'star',sz:11,d:2.3,dl:4.8},{sym:'✧',t:'star',sz:13,d:2.7,dl:6.4}],
+  [{sym:'🌟',t:'galaxy',sz:18,d:5.5,dl:0},{sym:'✦',t:'star',sz:14,d:2.8,dl:2.5},{sym:'🌟',t:'galaxy',sz:16,d:5.0,dl:5.0},{sym:'✧',t:'star',sz:13,d:3.0,dl:7.5}],
+];
+
+function calcRadius(ringIdx, n) {
+  const base = Math.min(W, H) * 0.46;
+  const fracs = [0.27, 0.41, 0.54, 0.66, 0.77, 0.658];
+  let r = base * fracs[ringIdx];
+  // Ensure photos don't overlap: min circumference = n * (size + gap)
+  const size  = photoSize(ringIdx);
+  const minR  = (n * (size + 8)) / (2 * Math.PI);
+  return Math.max(r, minR);
+}
+
+function photoSize(ringIdx) {
+  return [54, 50, 48, 46, 44, 42][ringIdx];
+}
+
+function buildUniverse() {
+  container.querySelectorAll('.photo-item, .ring-circle, .ring-label, .sp-item').forEach(e => e.remove());
+  orbitItems = [];
+  spaceItems = [];
+
+  const cx = W / 2, cy = H / 2;
+  const totalRings = RING_ORDER.length;
+
+  RING_ORDER.forEach((year, ri) => {
+    const photos = PHOTOS[year] || [];
+    const R    = calcRadius(ri, photos.length);
+    const size = photoSize(ri);
+
+    // Ring visual — fade from inner (bright) to outer (dim)
+    const alpha = (0.65 - (ri / (totalRings - 1)) * 0.52).toFixed(2);
+    const glowA = (parseFloat(alpha) * 0.4).toFixed(2);
+    const ring = document.createElement('div');
+    ring.className = 'ring-circle';
+    ring.style.cssText = `width:${R*2}px;height:${R*2}px;border-color:rgba(255,120,170,${alpha});box-shadow:0 0 8px rgba(255,100,160,${glowA}),inset 0 0 8px rgba(255,100,160,${(parseFloat(glowA)*0.4).toFixed(2)});`;
+    container.appendChild(ring);
+
+    // Space objects orbiting on this ring
+    const objs = RING_OBJECTS[ri] || [];
+    objs.forEach((obj, i) => {
+      const startAngle = (i / objs.length) * Math.PI * 2;
+      const el = document.createElement('div');
+      el.className = `sp-item sp-${obj.t}`;
+      el.textContent = obj.sym;
+      el.style.cssText = `font-size:${obj.sz}px;animation:sp-twinkle ${obj.d}s ${obj.dl}s ease-in-out infinite;`;
+      container.appendChild(el);
+      spaceItems.push({ el, R, startAngle, speed: SP_SPEEDS[ri] });
+    });
+
+    // Photos (hidden via CSS, still tracked for lightbox/dance)
+    photos.forEach((path, i) => {
+      const startAngle = (i / photos.length) * Math.PI * 2 - Math.PI / 2;
+      const el = document.createElement('div');
+      el.className = 'photo-item';
+      el.style.cssText = `width:${size}px;height:${size}px;margin-left:-${size/2}px;margin-top:-${size/2}px;`;
+      const img = document.createElement('img');
+      img.src   = path;
+      img.loading = 'lazy';
+      el.appendChild(img);
+      const flatIdx = FLAT.findIndex(f => f.path === path);
+      el.addEventListener('click', () => openLB(flatIdx));
+      container.appendChild(el);
+      orbitItems.push({ el, cx, cy, R, startAngle, speed: SPEEDS[ri] });
+    });
+  });
+}
+
+// ════════════════════════════════════════
+// ANIMATION
+// ════════════════════════════════════════
+function animate(t) {
+  drawStars(t);
+  drawParticleHeart(t);
+  const cx = W / 2, cy = H / 2;
+  orbitItems.forEach(o => {
+    const angle = o.startAngle;
+    const x = cx + o.R * Math.cos(angle);
+    const y = cy + o.R * Math.sin(angle);
+    o.el.style.left = x + 'px';
+    o.el.style.top  = y + 'px';
+    o.currentX = x;
+    o.currentY = y;
+  });
+  spaceItems.forEach(o => {
+    const angle = o.startAngle + o.speed * t;
+    const x = cx + o.R * Math.cos(angle);
+    const y = cy + o.R * Math.sin(angle);
+    o.el.style.left = x + 'px';
+    o.el.style.top  = y + 'px';
+  });
+  updateDanceHearts(t);
+  requestAnimationFrame(animate);
+}
+
+// ════════════════════════════════════════
+// PARTICLES
+// ════════════════════════════════════════
+function spawnParticle() {
+  const cx = W / 2, cy = H / 2;
+  const p  = document.createElement('div');
+  p.className = 'particle';
+  const angle = Math.random() * Math.PI * 2;
+  const dist  = Math.random() * 110 + 20;
+  const dx    = Math.cos(angle) * dist;
+  const dy    = Math.sin(angle) * dist - 60;
+  const dur   = Math.random() * 2000 + 2000;
+  const sym   = Math.random() > 0.45 ? '♥' : (Math.random() > 0.5 ? '✦' : '✧');
+  p.textContent = sym;
+  p.style.cssText = `
+    left:${cx + (Math.random()-0.5)*50}px;
+    top:${cy + (Math.random()-0.5)*50}px;
+    font-size:${Math.random()*8+8}px;
+    color:rgba(255,${Math.floor(Math.random()*60+60)},${Math.floor(Math.random()*40+100)},.85);
+    --dx:${dx}px; --dy:${dy}px;
+    animation-duration:${dur}ms;
+    z-index:25;
+  `;
+  document.getElementById('universe').appendChild(p);
+  setTimeout(() => p.remove(), dur + 100);
+}
+
+setInterval(spawnParticle, 500);
+
+// ════════════════════════════════════════
+// LIGHTBOX
+// ════════════════════════════════════════
+const lb     = document.getElementById('lightbox');
+const lbImg  = document.getElementById('lb-img');
+const lbInfo = document.getElementById('lb-info');
+let lbIdx    = 0;
+
+function openLB(idx) {
+  lbIdx = ((idx % FLAT.length) + FLAT.length) % FLAT.length;
+  const f = FLAT[lbIdx];
+  lbImg.src = f.path;
+  lbInfo.textContent = f.year + '  ·  ' + (lbIdx + 1) + ' / ' + FLAT.length;
+  lb.classList.add('on');
+}
+
+function closeLB() { lb.classList.remove('on'); }
+function navLB(d)  { openLB(lbIdx + d); }
+
+document.getElementById('lb-close').addEventListener('click', closeLB);
+document.getElementById('lb-prev').addEventListener('click', () => navLB(-1));
+document.getElementById('lb-next').addEventListener('click', () => navLB(1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('on')) return;
+  if (e.key === 'Escape')      closeLB();
+  if (e.key === 'ArrowLeft')   navLB(-1);
+  if (e.key === 'ArrowRight')  navLB(1);
+});
+
+// Swipe support
+let touchStartX = 0;
+lb.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) navLB(dx < 0 ? 1 : -1);
+});
+
+// ════════════════════════════════════════
+// TIMELINE
+// ════════════════════════════════════════
+// Feature 8 — milestone labels per year
+const MILESTONES = {
+  2020: 'Khởi Đầu', 2022: 'Bên Nhau',
+  2023: 'Kỷ Niệm',  2024: 'Hành Trình',
+  2025: 'Ước Mơ',   2026: 'Hiện Tại'
+};
+
+function buildTimeline() {
+  const sec = document.getElementById('timeline');
+  [...RING_ORDER].forEach(year => {
+    const photos = PHOTOS[year];
+    if (!photos) return;
+    const block = document.createElement('div');
+    block.className = 'year-block';
+    block.innerHTML = `<div class="year-tag">${year}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'photo-grid';
+    photos.forEach((path, pi) => {
+      const item = document.createElement('div');
+      item.className = 'grid-item';
+      item.style.position = 'relative';
+      // First photo of each year gets milestone badge
+      if (pi === 0 && MILESTONES[year]) {
+        item.classList.add('milestone-item');
+        const badge = document.createElement('div');
+        badge.className = 'milestone-badge';
+        badge.textContent = MILESTONES[year];
+        item.appendChild(badge);
+      }
+      const img = document.createElement('img');
+      img.src = path; img.loading = 'lazy';
+      const fi = FLAT.findIndex(f => f.path === path);
+      item.addEventListener('click', () => openLB(fi));
+      item.appendChild(img);
+      grid.appendChild(item);
+    });
+    block.appendChild(grid);
+    sec.appendChild(block);
+  });
+}
+
+// ════════════════════════════════════════
+// PARTICLE HEART  — emit from heart curve
+// (inspired by @bena290102 TikTok effect)
+// ════════════════════════════════════════
+const HC_SIZE = 300;
+const hCnv   = document.getElementById('heart-canvas');
+const hCtx   = hCnv.getContext('2d');
+
+// Parametric heart: x=16sin³t, y=13cos-5cos2-2cos3-cos4
+// Scale + center so heart fills the 300×300 canvas
+const HC_SCALE = 9;          // 16*9=144 → fits in 300px
+const HC_CX    = 150;        // canvas center X
+const HC_CY    = 133;        // canvas center Y (shifted up so bottom tip fits)
+
+function heartPt(t) {
+  const s = Math.sin(t);
+  return {
+    x:  16 * s * s * s,
+    y: -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t))
+  };
+}
+
+// Ring-buffer particle pool  — 8 floats per particle:
+//   0:x  1:y  2:vx  3:vy  4:size  5:life  6:maxLife  7:colorIdx
+const HP_MAX    = (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 600 || navigator.hardwareConcurrency <= 2) ? 1800 : 5000;
+const HP_STRIDE = 8;
+const hp        = new Float32Array(HP_MAX * HP_STRIDE);
+let   hp_head   = 0;    // oldest slot index (ring)
+let   hp_count  = 0;    // number of alive+dead slots in use
+
+function emitHeartParticle(px, py, vx, vy, sz, maxLife, cIdx) {
+  const slot = (hp_head + hp_count) % HP_MAX;
+  const i    = slot * HP_STRIDE;
+  hp[i]   = px;  hp[i+1] = py;
+  hp[i+2] = vx;  hp[i+3] = vy;
+  hp[i+4] = sz;  hp[i+5] = 0;
+  hp[i+6] = maxLife; hp[i+7] = cIdx;
+  if (hp_count < HP_MAX) { hp_count++; }
+  else { hp_head = (hp_head + 1) % HP_MAX; } // evict oldest
+}
+
+// Pre-bake color table: crimson → hot-pink → bright rose, 64 entries
+const HP_COLORS = new Uint8Array(64 * 3);
+for (let i = 0; i < 64; i++) {
+  const f = i / 63;
+  if (f < 0.45) {
+    const g = f / 0.45;                               // 0→1 : deep red → hot pink
+    HP_COLORS[i*3]   = Math.floor(190 + g * 65);     // 190→255
+    HP_COLORS[i*3+1] = Math.floor(g * 35);            // 0→35
+    HP_COLORS[i*3+2] = Math.floor(50  + g * 80);     // 50→130
+  } else {
+    const g = (f - 0.45) / 0.65;                     // 0→1 : hot pink → bright rose-white
+    HP_COLORS[i*3]   = 255;
+    HP_COLORS[i*3+1] = Math.floor(35  + g * 140);    // 35→175
+    HP_COLORS[i*3+2] = Math.floor(130 + g * 90);     // 130→220
+  }
+}
+
+let hp_lastT  = 0;
+let hp_lastLub = 0, hp_lastDub = 0;
+
+// ── Heartbeat sound (Web Audio API) ──
+let beatAC = null;
+function playThump(vol, freq) {
+  if (!beatAC || beatAC.state === 'suspended') return;
+  const now  = beatAC.currentTime;
+  const osc  = beatAC.createOscillator();
+  const gain = beatAC.createGain();
+  osc.connect(gain);
+  gain.connect(beatAC.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, now);
+  osc.frequency.exponentialRampToValueAtTime(22, now + 0.14);
+  gain.gain.setValueAtTime(vol, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.20);
+  osc.start(now);
+  osc.stop(now + 0.22);
+}
+
+function drawParticleHeart(t) {
+  const dt = hp_lastT ? Math.min(t - hp_lastT, 40) : 16;
+  hp_lastT = t;
+
+  hCtx.clearRect(0, 0, HC_SIZE, HC_SIZE);
+
+  // ── Heartbeat: two-beat (lub-dub) rhythm every 1400ms ──
+  const phase1 = (t % 1400) / 1400;
+  const phase2 = ((t + 380) % 1400) / 1400;
+  const lub = Math.max(0, Math.sin(phase1 * Math.PI * 2)) * 0.7;
+  const dub = Math.max(0, Math.sin(phase2 * Math.PI * 2)) * 0.4;
+  const beat = 1 + lub + dub;          // 1.0 – 2.1×
+
+  // ── Trigger heartbeat sound on rising edge of lub / dub ──
+  if (lub > 0.30 && hp_lastLub <= 0.30) playThump(0.18, 62);
+  if (dub > 0.15 && hp_lastDub <= 0.15) playThump(0.10, 50);
+  hp_lastLub = lub; hp_lastDub = dub;
+
+  // ── Inner glow (radial gradient clipped to heart shape) ──
+  hCtx.save();
+  hCtx.beginPath();
+  const GSTEPS = 240;
+  for (let i = 0; i <= GSTEPS; i++) {
+    const ang = (i / GSTEPS) * Math.PI * 2;
+    const gp  = heartPt(ang);
+    const gx  = HC_CX + gp.x * HC_SCALE;
+    const gy  = HC_CY + gp.y * HC_SCALE;
+    i === 0 ? hCtx.moveTo(gx, gy) : hCtx.lineTo(gx, gy);
+  }
+  hCtx.closePath();
+  const glowAlpha = 0.18 + (beat - 1) * 0.10;
+  // Layer 1 — deep body glow
+  const grd = hCtx.createRadialGradient(HC_CX, HC_CY, 0, HC_CX, HC_CY, 145);
+  grd.addColorStop(0,    `rgba(255, 80,140,${(glowAlpha * 1.8).toFixed(3)})`);
+  grd.addColorStop(0.35, `rgba(220, 30, 90,${glowAlpha.toFixed(3)})`);
+  grd.addColorStop(0.75, `rgba(160,  0, 60,${(glowAlpha * 0.5).toFixed(3)})`);
+  grd.addColorStop(1,    'rgba(100,0,40,0)');
+  hCtx.fillStyle = grd;
+  hCtx.fill();
+  // Layer 2 — bright highlight near top dip
+  hCtx.save();
+  hCtx.clip();
+  const hgl = hCtx.createRadialGradient(HC_CX, HC_CY - 62, 0, HC_CX, HC_CY - 50, 55);
+  hgl.addColorStop(0,   `rgba(255,200,230,${(0.22 + (beat-1)*0.12).toFixed(3)})`);
+  hgl.addColorStop(0.5, `rgba(255,120,180,${(0.08 + (beat-1)*0.05).toFixed(3)})`);
+  hgl.addColorStop(1,   'rgba(255,80,140,0)');
+  hCtx.fillStyle = hgl;
+  hCtx.fill();
+  hCtx.restore();
+  // (heart path clip ends — restore below)
+  hCtx.restore();
+
+  // ── Emit new particles from heart curve ──
+  const emitN = Math.round((dt / 16) * 9 * beat);   // ~9/frame × beat
+  for (let k = 0; k < emitN; k++) {
+    const angle = Math.random() * Math.PI * 2;
+    const pt    = heartPt(angle);
+    const px    = HC_CX + pt.x * HC_SCALE;
+    const py    = HC_CY + pt.y * HC_SCALE;
+
+    // Velocity: radially outward from heart center + scatter
+    const len   = Math.sqrt(pt.x * pt.x + pt.y * pt.y) || 1;
+    const speed = (Math.random() * 0.9 + 0.15) * (1 + beat * 0.25);
+    const vx    = (pt.x / len) * speed + (Math.random() - 0.5) * 0.35;
+    const vy    = (pt.y / len) * speed + (Math.random() - 0.5) * 0.35;
+
+    const sz      = Math.random() * 3.5 + 1.2;
+    const maxLife = Math.random() * 2200 + 900;
+    const cIdx    = Math.floor(Math.random() * 64);
+
+    emitHeartParticle(px, py, vx, vy, sz, maxLife, cIdx);
+  }
+
+  // ── Emit interior fill particles (70% area coverage) ──
+  const fillN = Math.round((dt / 16) * 20);
+  for (let k = 0; k < fillN; k++) {
+    const angle = Math.random() * Math.PI * 2;
+    const pt    = heartPt(angle);
+    // outer 70% annular area: frac ∈ [√0.30, 1.0] — từ viền vào trong
+    const frac  = Math.sqrt(0.30 + Math.random() * 0.70);
+    const px    = HC_CX + pt.x * HC_SCALE * frac;
+    const py    = HC_CY + pt.y * HC_SCALE * frac;
+    const vx    = (Math.random() - 0.5) * 0.10;
+    const vy    = (Math.random() - 0.5) * 0.10;
+    const sz      = Math.random() * 3.4 + 1.8;
+    const maxLife = Math.random() * 1800 + 1000;
+    const cIdx    = Math.floor(Math.random() * 64);
+    emitHeartParticle(px, py, vx, vy, sz, maxLife, cIdx);
+  }
+
+  // ── Also emit dense center-glow at top dip (t≈0 on heart) ──
+  if (Math.random() < 0.4 * beat) {
+    const glowPt = heartPt(0.05 * (Math.random() - 0.5)); // near top dip
+    const gx = HC_CX + glowPt.x * HC_SCALE;
+    const gy = HC_CY + glowPt.y * HC_SCALE;
+    for (let g = 0; g < 3; g++) {
+      emitHeartParticle(
+        gx + (Math.random()-0.5)*4, gy + (Math.random()-0.5)*4,
+        (Math.random()-0.5)*0.6, (Math.random()-0.5)*0.6,
+        Math.random()*2+1, Math.random()*600+400, 63  // bright white-pink
+      );
+    }
+  }
+
+  // ── Update & draw all slots ──
+  hCtx.textAlign    = 'center';
+  hCtx.textBaseline = 'middle';
+  for (let k = 0; k < hp_count; k++) {
+    const slot = (hp_head + k) % HP_MAX;
+    const i    = slot * HP_STRIDE;
+
+    hp[i+5] += dt;              // age particle
+    const prog = hp[i+5] / hp[i+6];
+    if (prog >= 1) continue;    // dead — skip (will be evicted by ring)
+
+    // Move
+    hp[i]   += hp[i+2];
+    hp[i+1] += hp[i+3];
+
+    // Fade + shrink
+    const alpha   = (1 - prog) * (1 - prog) * 0.92; // quadratic fade
+    const sz      = hp[i+4] * (1 - prog * 0.45);
+
+    // Color from table
+    const ci = Math.min(Math.floor(hp[i+7] + prog * 18), 63) * 3;
+    const rr = HP_COLORS[ci], gg = HP_COLORS[ci+1], bb = HP_COLORS[ci+2];
+
+    hCtx.globalAlpha = alpha;
+    hCtx.fillStyle   = `rgb(${rr},${gg},${bb})`;
+    hCtx.font        = `${(sz * 1.7).toFixed(1)}px serif`;
+    hCtx.fillText('♥', hp[i], hp[i+1]);
+  }
+  hCtx.globalAlpha = 1;
+
+  // ── Glowing heart outline (drawn on top of particles) ──
+  hCtx.save();
+  hCtx.beginPath();
+  const OS = 300;
+  for (let i = 0; i <= OS; i++) {
+    const ang = (i / OS) * Math.PI * 2;
+    const op  = heartPt(ang);
+    const ox  = HC_CX + op.x * HC_SCALE;
+    const oy  = HC_CY + op.y * HC_SCALE;
+    i === 0 ? hCtx.moveTo(ox, oy) : hCtx.lineTo(ox, oy);
+  }
+  hCtx.closePath();
+  // Wide outer glow pass
+  hCtx.shadowColor  = '#ff2070';
+  hCtx.shadowBlur   = 22 + (beat - 1) * 14;
+  hCtx.lineWidth    = 2.2 + (beat - 1) * 1.4;
+  hCtx.strokeStyle  = `rgba(255,60,130,${(0.65 + (beat-1)*0.25).toFixed(3)})`;
+  hCtx.stroke();
+  // Thin bright core line
+  hCtx.shadowBlur   = 6;
+  hCtx.lineWidth    = 0.9;
+  hCtx.strokeStyle  = `rgba(255,200,225,${(0.70 + (beat-1)*0.20).toFixed(3)})`;
+  hCtx.stroke();
+  hCtx.restore();
+
+  // ── Pulse: scale heart canvas with heartbeat rhythm ──
+  const pulseScale = 1 + (beat - 1) * 0.09;
+  hCnv.style.transform       = `scale(${pulseScale.toFixed(4)})`;
+  hCnv.style.transformOrigin = 'center center';
+}
+
+// ════════════════════════════════════════
+// DANCING HEARTS AROUND PHOTOS
+// ════════════════════════════════════════
+const dCnv = document.getElementById('dance-canvas');
+const dCtx = dCnv.getContext('2d');
+
+function resizeDanceCanvas() {
+  dCnv.width  = window.innerWidth;
+  dCnv.height = window.innerHeight;
+}
+
+// Heart pool
+const DHEARTS = [];
+const MAX_HEARTS = 280;
+
+// Spawn a dancing heart at (ox, oy) — a photo's orbit position
+function spawnDanceHeart(ox, oy) {
+  if (DHEARTS.length >= MAX_HEARTS) return;
+  const angle = Math.random() * Math.PI * 2;
+  const dist  = Math.random() * 38 + 14;
+  const chars = ['♥','♡','❤','♥','♥'];
+  const hue   = Math.random();           // 0=hot-pink, 1=magenta
+  const r     = 215 + Math.floor(Math.random() * 40);
+  const g     = Math.floor(Math.random() * 50);
+  const b     = 80  + Math.floor(Math.random() * 120);
+  DHEARTS.push({
+    sx: ox + Math.cos(angle) * dist,     // spawn X
+    sy: oy + Math.sin(angle) * dist,     // spawn Y
+    char:      chars[Math.floor(Math.random() * chars.length)],
+    size:      Math.random() * 14 + 7,
+    r, g, b,
+    born:      0,                        // set at first draw
+    maxLife:   Math.random() * 2800 + 1800,
+    // sway dance
+    swayAmp:   Math.random() * 28 + 12,
+    swayFreq:  Math.random() * 0.003 + 0.0015,
+    swayPhase: Math.random() * Math.PI * 2,
+    // bounce dance
+    bounceAmp: Math.random() * 18 + 6,
+    bncFreq:   Math.random() * 0.007 + 0.003,
+    bncPhase:  Math.random() * Math.PI * 2,
+    // rise speed
+    riseSpeed: Math.random() * 0.045 + 0.018,
+    // blink (chóp chóp)
+    blkFreq:   Math.random() * 0.018 + 0.010,
+    blkPhase:  Math.random() * Math.PI * 2,
+    // spin wobble
+    spinFreq:  Math.random() * 0.004 + 0.001,
+    spinAmp:   Math.random() * 0.5 + 0.15,
+    // scale pulse
+    scaleFreq: Math.random() * 0.006 + 0.003,
+    initialized: false
+  });
+}
+
+let lastT = 0;
+function updateDanceHearts(t) {
+  const dt = lastT ? Math.min(t - lastT, 40) : 16;
+  lastT = t;
+
+  dCtx.clearRect(0, 0, dCnv.width, dCnv.height);
+  dCtx.textAlign = 'center';
+  dCtx.textBaseline = 'middle';
+
+  // Spawn from random orbit photos
+  if (orbitItems.length > 0) {
+    const spawnRate = 0.22;                // hearts per frame
+    if (Math.random() < spawnRate) {
+      const o = orbitItems[Math.floor(Math.random() * orbitItems.length)];
+      if (o.currentX !== undefined) spawnDanceHeart(o.currentX, o.currentY);
+    }
+    // Extra burst on inner rings (most recent photos)
+    if (Math.random() < 0.08) {
+      const inner = orbitItems.filter(o => o.R < Math.min(W, H) * 0.32);
+      if (inner.length) {
+        const o = inner[Math.floor(Math.random() * inner.length)];
+        if (o.currentX !== undefined) spawnDanceHeart(o.currentX, o.currentY);
+      }
+    }
+  }
+
+  for (let i = DHEARTS.length - 1; i >= 0; i--) {
+    const h = DHEARTS[i];
+
+    // Init born time
+    if (!h.initialized) { h.born = t; h.initialized = true; }
+    const age      = t - h.born;
+    const progress = age / h.maxLife;
+    if (progress >= 1) { DHEARTS.splice(i, 1); continue; }
+
+    // ── Position ──
+    const px = h.sx
+      + Math.sin(age * h.swayFreq  + h.swayPhase)  * h.swayAmp;
+    const bounce = Math.abs(Math.sin(age * h.bncFreq + h.bncPhase)) * h.bounceAmp;
+    const py = h.sy - age * h.riseSpeed - bounce;
+
+    // ── Alpha (chóp chóp = rapid blink × fade envelope) ──
+    const blink   = (Math.sin(age * h.blkFreq + h.blkPhase) + 1) / 2;  // 0-1
+    const fastBlk = (Math.sin(age * h.blkFreq * 3.1 + 1.2) + 1) / 2;  // faster harmonic
+    const blinkVal = blink * 0.6 + fastBlk * 0.4;                       // combined
+
+    const fadeIn  = Math.min(age / 300,  1);
+    const fadeOut = progress > 0.65 ? 1 - (progress - 0.65) / 0.35 : 1;
+    const alpha   = blinkVal * fadeIn * fadeOut * 0.95;
+
+    if (alpha < 0.02) continue;
+
+    // ── Size pulse ──
+    const sp = 1 + Math.sin(age * h.scaleFreq) * 0.22
+                 + Math.sin(age * h.scaleFreq * 2.3 + 0.65) * 0.08;
+
+    // ── Rotation wobble ──
+    const rot = Math.sin(age * h.spinFreq) * h.spinAmp;
+
+    dCtx.save();
+    dCtx.translate(px, py);
+    dCtx.rotate(rot);
+    dCtx.globalAlpha = alpha;
+    dCtx.font = `${h.size * sp}px serif`;
+    dCtx.fillStyle = `rgb(${h.r},${h.g},${h.b})`;
+    // Glow
+    dCtx.shadowColor = `rgba(${h.r},${h.g},${h.b},0.65)`;
+    dCtx.shadowBlur  = 8;
+    dCtx.fillText(h.char, 0, 0);
+    dCtx.restore();
+  }
+  dCtx.globalAlpha = 1;
+  dCtx.shadowBlur  = 0;
+}
+
+// ════════════════════════════════════════
+// SHOOTING STARS WITH PHOTOS
+// ════════════════════════════════════════
+function spawnShootingStar() {
+  if (!FLAT.length) return;
+  const item = FLAT[Math.floor(Math.random() * FLAT.length)];
+  const size = Math.floor(Math.random() * 18 + 36);   // 36–54 px
+
+  // Pick random entry edge, then set angle pointing inward across screen
+  const W = window.innerWidth, H = window.innerHeight;
+  const edge = Math.floor(Math.random() * 4); // 0=top 1=right 2=bottom 3=left
+  let sx, sy, angleDeg;
+  if (edge === 0) {        // từ trên xuống
+    sx = Math.random() * W;
+    sy = -size;
+    angleDeg = Math.random() * 50 + 65;    // 65–115°
+  } else if (edge === 1) { // từ phải sang trái
+    sx = W + size;
+    sy = Math.random() * H;
+    angleDeg = Math.random() * 50 + 155;   // 155–205°
+  } else if (edge === 2) { // từ dưới lên
+    sx = Math.random() * W;
+    sy = H + size;
+    angleDeg = Math.random() * 50 + 245;   // 245–295°
+  } else {                 // từ trái sang phải
+    sx = -size;
+    sy = Math.random() * H;
+    angleDeg = Math.random() * 50 - 25;    // -25–25°
+  }
+  const angleRad = angleDeg * Math.PI / 180;
+  const dist = Math.min(W, H) * (0.42 + Math.random() * 0.35);
+  const ex = sx + Math.cos(angleRad) * dist;
+  const ey = sy + Math.sin(angleRad) * dist;
+
+  // Wrapper
+  const el = document.createElement('div');
+  el.style.cssText = `
+    position:fixed;z-index:150;pointer-events:none;
+    width:${size}px;height:${size}px;
+    left:${sx}px;top:${sy}px;
+    border-radius:50%;overflow:visible;
+    border:2px solid rgba(255,255,255,.88);
+    box-shadow:0 0 ${size * 0.5}px rgba(255,215,235,.95),
+               0 0 ${size * 1.1}px rgba(255,100,160,.60);
+  `;
+
+  // Photo
+  const img = document.createElement('img');
+  img.src = item.path;
+  img.loading = 'eager';
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;';
+
+  // Comet tail — anchored at photo center, pointing backward
+  const tailLen = size * 3.2 + Math.random() * size * 2.8;
+  const tailH   = Math.max(2, Math.round(size * 0.12));
+  const tail = document.createElement('div');
+  tail.style.cssText = `
+    position:absolute;left:50%;top:50%;
+    width:${tailLen}px;height:${tailH}px;
+    margin-top:${-tailH / 2}px;
+    transform-origin:0% 50%;
+    transform:rotate(${angleDeg + 180}deg);
+    background:linear-gradient(to right,
+      rgba(255,220,240,.92) 0%,
+      rgba(255,160,205,.55) 35%,
+      rgba(255,100,160,.18) 70%,
+      transparent 100%);
+    border-radius:${tailH}px;
+    pointer-events:none;
+  `;
+
+  // Sparkle dot at tip of tail
+  const spark = document.createElement('div');
+  spark.style.cssText = `
+    position:absolute;left:50%;top:50%;
+    width:${Math.max(3, size * 0.14)}px;height:${Math.max(3, size * 0.14)}px;
+    margin-left:${-tailLen}px;
+    margin-top:${-Math.max(3, size * 0.14) / 2}px;
+    transform:rotate(${angleDeg + 180}deg);
+    border-radius:50%;
+    background:rgba(255,235,245,.85);
+    box-shadow:0 0 6px 2px rgba(255,180,220,.9);
+    pointer-events:none;
+    transform-origin:0% 50%;
+  `;
+
+  // Photo clickable → card reveal
+  img.style.cursor        = 'pointer';
+  img.style.pointerEvents = 'auto';
+  img.addEventListener('click', e => {
+    e.stopPropagation();
+    el.remove();
+    openCardReveal(item.path, item.year, e.clientX, e.clientY);
+  });
+
+  // ── Hover effects ──
+  img.addEventListener('mouseenter', () => {
+    el.style.transition  = 'transform .18s cubic-bezier(.175,.885,.32,1.275), box-shadow .18s ease, border-color .18s ease';
+    el.style.transform   = 'scale(1.35)';
+    el.style.boxShadow   = `
+      0 0 ${size}px   rgba(255,230,245,1),
+      0 0 ${size*2}px rgba(255,90,160,.95),
+      0 0 ${size*4}px rgba(255,40,100,.45)
+    `;
+    el.style.borderColor = 'rgba(255,255,255,.98)';
+
+    // Expanding pulse ring
+    const spawnRing = () => {
+      if (!el.isConnected) return;
+      const ring = document.createElement('div');
+      ring.style.cssText = `
+        position:absolute;
+        top:50%;left:50%;
+        width:${size}px;height:${size}px;
+        margin:${-size/2}px 0 0 ${-size/2}px;
+        border-radius:50%;
+        border:1.5px solid rgba(255,180,220,.85);
+        pointer-events:none;
+        transform:scale(1);opacity:.85;
+        transition:transform .55s ease-out,opacity .55s ease-out;
+      `;
+      el.appendChild(ring);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        ring.style.transform = 'scale(2.8)';
+        ring.style.opacity   = '0';
+      }));
+      setTimeout(() => ring.remove(), 620);
+    };
+    spawnRing();
+    el._ringInterval = setInterval(spawnRing, 600);
+  });
+
+  img.addEventListener('mouseleave', () => {
+    clearInterval(el._ringInterval);
+    el.style.transition  = 'transform .25s ease, box-shadow .25s ease, border-color .25s ease';
+    el.style.transform   = 'scale(1)';
+    el.style.boxShadow   = `
+      0 0 ${size * 0.5}px rgba(255,215,235,.95),
+      0 0 ${size * 1.1}px rgba(255,100,160,.60)
+    `;
+    el.style.borderColor = 'rgba(255,255,255,.88)';
+  });
+
+  el.appendChild(tail);
+  el.appendChild(spark);
+  el.appendChild(img);
+  document.body.appendChild(el);
+
+  // Animation: linear (uniform speed = mượt), 4.5 s
+  const startTime = performance.now();
+  const DURATION  = 4500;
+
+  (function frame(now) {
+    const t = Math.min((now - startTime) / DURATION, 1);
+    el.style.left = (sx + (ex - sx) * t) + 'px';
+    el.style.top  = (sy + (ey - sy) * t) + 'px';
+    // fade-in 0→6%, full 6→78%, fade-out 78→100%
+    el.style.opacity = t < 0.06 ? t / 0.06
+                     : t > 0.78 ? 1 - (t - 0.78) / 0.22
+                     : 1;
+    if (t < 1) requestAnimationFrame(frame);
+    else el.remove();
+  })(performance.now());
+}
+
+// Self-rescheduling: random 3–5 s between shooting stars
+(function scheduleNext() {
+  setTimeout(() => { spawnShootingStar(); scheduleNext(); },
+             Math.random() * 2000 + 3000);
+})();
+
+// ════════════════════════════════════════
+// CARD REVEAL  (FIFA / LOL style)
+// ════════════════════════════════════════
+function spawnCardParticles(cx, cy) {
+  const palette = ['#ffd700','#ff6090','#ff3a80','#fff0f5','#ffb6c1','#ff69b4','#ffe4e1'];
+  for (let i = 0; i < 48; i++) {
+    const angle  = Math.random() * Math.PI * 2;
+    const dist   = Math.random() * 200 + 60;
+    const size   = Math.random() * 9 + 3;
+    const color  = palette[Math.floor(Math.random() * palette.length)];
+    const dur    = Math.random() * 700 + 450;
+    const dx     = Math.cos(angle) * dist;
+    const dy     = Math.sin(angle) * dist;
+    const p = document.createElement('div');
+    p.style.cssText = `
+      position:fixed;left:${cx}px;top:${cy}px;z-index:5000;
+      width:${size}px;height:${size}px;
+      background:${color};
+      border-radius:${Math.random() > 0.45 ? '50%' : '3px'};
+      pointer-events:none;
+      transform:translate(-50%,-50%);
+      box-shadow:0 0 8px ${color};
+      transition:transform ${dur}ms ease-out,opacity ${dur}ms ease-out;
+    `;
+    document.body.appendChild(p);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      p.style.transform = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(0)`;
+      p.style.opacity   = '0';
+    }));
+    setTimeout(() => p.remove(), dur + 100);
+  }
+}
+
+function openCardReveal(photoPath, year, clickX, clickY) {
+  let closed = false;
+  const flatIdx = Math.max(0, FLAT.findIndex(f => f.path === photoPath));
+
+  const CW = 200, CH = 280;
+  // Position card centered on click, clamped inside viewport
+  const margin = 12;
+  const left = Math.max(margin, Math.min(window.innerWidth  - CW - margin, (clickX || window.innerWidth/2)  - CW / 2));
+  const top  = Math.max(margin, Math.min(window.innerHeight - CH - margin, (clickY || window.innerHeight/2) - CH / 2));
+
+  // ── Backdrop ──
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `
+    position:fixed;inset:0;z-index:3000;
+    background:rgba(0,0,0,0);
+    transition:background .4s;
+    cursor:pointer;
+  `;
+
+  // ── Card ──
+  const card = document.createElement('div');
+  card.style.cssText = `
+    position:fixed;
+    left:${left}px;top:${top}px;
+    width:${CW}px;height:${CH}px;
+    border-radius:16px;overflow:hidden;
+    perspective:900px;
+    cursor:pointer;pointer-events:auto;
+    transform:scale(0.1) rotateZ(-15deg);
+    transition:transform 0s;
+    background:linear-gradient(148deg,#0e0028 0%,#250055 28%,#180038 55%,#08001a 100%);
+    border:2px solid rgba(255,185,70,.85);
+    box-shadow:0 0 18px rgba(255,140,40,.6),0 0 40px rgba(255,60,140,.32);
+    z-index:3100;
+  `;
+  card.addEventListener('click', e => { e.stopPropagation(); closeCard(); openLB(flatIdx); });
+
+  // Badge
+  const badge = document.createElement('div');
+  badge.style.cssText = `
+    position:absolute;top:8px;left:0;right:0;text-align:center;
+    font-size:9px;letter-spacing:4px;color:rgba(255,215,90,.92);
+    font-family:Georgia,serif;text-shadow:0 0 12px rgba(255,185,0,.85);
+    z-index:3;pointer-events:none;
+  `;
+  badge.textContent = '✦  ' + year + '  ✦';
+
+  // Photo
+  const photo = document.createElement('img');
+  photo.src = photoPath;
+  photo.loading = 'eager';
+  photo.style.cssText = 'width:100%;height:75%;object-fit:cover;display:block;margin-top:26px;';
+
+  // Bottom bar
+  const bar = document.createElement('div');
+  bar.style.cssText = `
+    position:absolute;bottom:0;left:0;right:0;height:25%;
+    background:linear-gradient(to bottom,transparent,rgba(8,0,22,.95) 45%);
+    display:flex;align-items:center;justify-content:center;pointer-events:none;
+  `;
+  const ht = document.createElement('div');
+  ht.style.cssText = `font-size:11px;letter-spacing:4px;color:rgba(255,90,160,.92);text-shadow:0 0 12px rgba(255,50,120,.9);`;
+  ht.textContent = '♥ Thúy Vy ♥';
+  bar.appendChild(ht);
+
+  // Corner deco
+  const deco = document.createElement('div');
+  deco.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:2;font-size:8px;color:rgba(255,200,70,.5);';
+  deco.innerHTML = `
+    <span style="position:absolute;top:6px;left:8px">✦</span>
+    <span style="position:absolute;top:6px;right:8px">✦</span>
+    <span style="position:absolute;bottom:7px;left:8px">✦</span>
+    <span style="position:absolute;bottom:7px;right:8px">✦</span>`;
+
+  // Shine
+  const shine = document.createElement('div');
+  shine.style.cssText = `
+    position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:16px;
+    background:linear-gradient(112deg,transparent 15%,rgba(255,255,255,0) 32%,rgba(255,255,255,.36) 50%,rgba(255,255,255,0) 68%,transparent 85%);
+    background-size:300% 100%;background-position:-200% 0;
+  `;
+
+  card.appendChild(badge);
+  card.appendChild(photo);
+  card.appendChild(bar);
+  card.appendChild(deco);
+  card.appendChild(shine);
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+
+  // ── Phase 1: bung ra tại chỗ click ──
+  requestAnimationFrame(() => {
+    overlay.style.background = 'rgba(0,0,0,.6)';
+    card.style.transition    = 'transform .5s cubic-bezier(.175,.885,.32,1.275)';
+    card.style.transform     = 'scale(1.08) rotateZ(0deg)';
+  });
+
+  // ── Phase 2: wobble ──
+  setTimeout(() => {
+    card.style.transition = 'transform .11s ease-in-out';
+    card.style.transform  = 'rotateZ(4deg) scale(1.05)';
+    setTimeout(() => {
+      card.style.transform = 'rotateZ(-3deg) scale(1.03)';
+      setTimeout(() => {
+        card.style.transition = 'transform .1s ease';
+        card.style.transform  = 'scale(1) rotateZ(0deg)';
+        shine.style.transition = 'background-position .65s ease';
+        shine.style.backgroundPosition = '260% 0';
+      }, 110);
+    }, 110);
+  }, 540);
+
+  // ── Phase 3: flash + particles ──
+  setTimeout(() => {
+    const pcx = left + CW / 2, pcy = top + CH / 2;
+    spawnCardParticles(pcx, pcy);
+    const flash = document.createElement('div');
+    flash.style.cssText = `
+      position:fixed;inset:0;z-index:4500;pointer-events:none;
+      background:radial-gradient(circle at ${pcx}px ${pcy}px,
+        rgba(255,255,255,.6) 0%,rgba(255,180,220,.2) 35%,transparent 62%);
+      opacity:1;transition:opacity .45s;
+    `;
+    document.body.appendChild(flash);
+    setTimeout(() => { flash.style.opacity='0'; setTimeout(()=>flash.remove(),460); }, 60);
+    card.classList.add('card-glow-pulse');
+  }, 820);
+
+  // ── Keyboard & close ──
+  function onKey(e) { if (e.key === 'Escape') closeCard(); }
+  document.addEventListener('keydown', onKey);
+
+  const autoClose = setTimeout(closeCard, 8000);
+  overlay.addEventListener('click', closeCard);
+
+  function closeCard() {
+    if (closed) return; closed = true;
+    clearTimeout(autoClose);
+    document.removeEventListener('keydown', onKey);
+    card.classList.remove('card-glow-pulse');
+    overlay.style.transition = 'opacity .4s';
+    overlay.style.opacity    = '0';
+    setTimeout(() => overlay.remove(), 440);
+  }
+}
+
+// ════════════════════════════════════════
+// INTRO
+// ════════════════════════════════════════
+const intro    = document.getElementById('intro');
+const introBtn = document.getElementById('intro-btn');
+
+introBtn.addEventListener('click', () => {
+  intro.classList.add('fade-out');
+  setTimeout(() => { intro.style.display = 'none'; }, 1300);
+  // Init heartbeat AudioContext on first user gesture
+  if (!beatAC) beatAC = new (window.AudioContext || window.webkitAudioContext)();
+  // Auto-start BGM
+  setTimeout(() => { if (window._musicStart) window._musicStart(); }, 600);
+});
+
+// ════════════════════════════════════════
+// PRELOADER
+// ════════════════════════════════════════
+(function () {
+  const pre    = document.getElementById('preloader');
+  const bar    = document.getElementById('pre-bar');
+  const preTxt = document.getElementById('pre-text');
+  let prog = 0;
+
+  // Fake progress while real resources load
+  const iv = setInterval(() => {
+    prog = Math.min(prog + Math.random() * 20 + 5, 88);
+    bar.style.width = prog + '%';
+  }, 120);
+
+  function finish() {
+    clearInterval(iv);
+    bar.style.width = '100%';
+    preTxt.textContent = 'sẵn sàng ♥';
+    setTimeout(() => { pre.classList.add('hidden'); setTimeout(() => pre.remove(), 900); }, 300);
+  }
+
+  // Complete on window load or max 1.8s
+  window.addEventListener('load', finish);
+  setTimeout(finish, 1800);
+})();
+
+// ════════════════════════════════════════
+// PERFORMANCE & MOBILE DETECT
+// ════════════════════════════════════════
+const IS_MOBILE = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 600;
+const IS_LOW_END = IS_MOBILE || navigator.hardwareConcurrency <= 2;
+
+// ════════════════════════════════════════
+// 1. ROSE PETALS
+// ════════════════════════════════════════
+(function () {
+  const CHARS = ['✿','❀','✾','❁','✽'];
+  function spawnPetal() {
+    const p   = document.createElement('div');
+    p.className = 'petal';
+    const sz  = Math.random() * 11 + 7;
+    const x   = Math.random() * window.innerWidth;
+    const dur = Math.random() * 9000 + 8000;
+    const col = `rgba(255,${Math.floor(Math.random()*70+140)},${Math.floor(Math.random()*60+155)},.75)`;
+    const driftAmp = (Math.random() - 0.5) * 160;
+    const rotSpd   = (Math.random() - 0.5) * 400;
+    p.textContent  = CHARS[Math.floor(Math.random() * CHARS.length)];
+    p.style.cssText = `left:${x}px;top:-22px;font-size:${sz}px;color:${col};text-shadow:0 0 6px ${col};`;
+    document.body.appendChild(p);
+    const t0 = performance.now();
+    (function frame(now) {
+      const t = Math.min((now - t0) / dur, 1);
+      const py = -22 + (window.innerHeight + 44) * t;
+      const px = x + Math.sin(t * Math.PI * 4) * driftAmp;
+      const al = t < .08 ? t / .08 : t > .88 ? (1 - t) / .12 : 1;
+      p.style.cssText = `left:${px.toFixed(1)}px;top:${py.toFixed(1)}px;font-size:${sz}px;color:${col};text-shadow:0 0 6px ${col};transform:rotate(${(t*rotSpd).toFixed(1)}deg);opacity:${(al*.72).toFixed(3)};position:fixed;pointer-events:none;z-index:10;will-change:transform,opacity;`;
+      if (t < 1) requestAnimationFrame(frame); else p.remove();
+    })(performance.now());
+  }
+  if (!IS_MOBILE) {
+    for (let i = 0; i < 6; i++) setTimeout(spawnPetal, i * 400);
+    setInterval(spawnPetal, 1000);
+  }
+})();
+
+// ════════════════════════════════════════
+// 2. LOVE COUNTER
+// ════════════════════════════════════════
+(function () {
+  // ← Đổi ngày này thành ngày bắt đầu yêu nhau
+  const START = new Date('2026-05-10T00:00:00');
+  const daysEl = document.getElementById('lc-days');
+  const hmsEl  = document.getElementById('lc-hms');
+  function tick() {
+    const diff = Date.now() - START;
+    if (diff < 0) return;
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    daysEl.textContent = d.toLocaleString() + ' ngày';
+    hmsEl.textContent  = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 1000);
+})();
+
+// ════════════════════════════════════════
+// 3. TYPEWRITER LOVE LETTER
+// ════════════════════════════════════════
+(function () {
+  const TEXT = 'Thúy Vy ơi... Em là vũ trụ của anh — nơi mỗi ngôi sao đều mang tên em, mỗi khoảnh khắc đều có em hiện diện. Cảm ơn Thúy Vy đã xuất hiện và khiến cuộc đời anh đẹp hơn rất nhiều. anh yêu em — hôm nay, ngày mai và mãi mãi về sau. ♥';
+  let started = false;
+  function startLetter() {
+    if (started) return; started = true;
+    const box  = document.getElementById('love-letter');
+    const txtEl = document.getElementById('love-letter-text');
+    box.style.display = 'block';
+    const cur = document.createElement('span');
+    cur.className = 'tw-cursor'; txtEl.appendChild(cur);
+    let i = 0;
+    const iv = setInterval(() => {
+      if (i >= TEXT.length) { clearInterval(iv); setTimeout(() => cur.remove(), 2500); return; }
+      cur.insertAdjacentText('beforebegin', TEXT[i++]);
+    }, 60);
+  }
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) { startLetter(); obs.disconnect(); }
+  }, { threshold: 0.25 });
+  // Observe after timeline is built (called at init)
+  window.addEventListener('load', () => {
+    const el = document.getElementById('love-letter');
+    if (el) obs.observe(el);
+  });
+})();
+
+// ════════════════════════════════════════
+// 4. ROTATING LOVE QUOTES
+// ════════════════════════════════════════
+(function () {
+  const QUOTES = [
+    'Anh không cần cả vũ trụ, chỉ cần em là đủ.',
+    'Mỗi ngày bên em là một ngày anh muốn sống mãi.',
+    'Em là lý do anh tin vào những điều kỳ diệu.',
+    'Yêu là khi nhìn vào mắt nhau và thấy cả thế giới.',
+    'Tình yêu không đếm bằng thời gian, mà bằng những khoảnh khắc đẹp.',
+    'Em là ánh sáng trong những ngày tối tăm nhất của anh.',
+    'Ở bên em, anh thấy mình đang sống trọn vẹn nhất.',
+  ];
+  const wrap = document.getElementById('love-quote');
+  const txt  = document.getElementById('lq-text');
+  let idx = 0;
+  function show() {
+    wrap.style.opacity = '0';
+    setTimeout(() => {
+      txt.textContent = QUOTES[idx];
+      idx = (idx + 1) % QUOTES.length;
+      wrap.style.opacity = '1';
+    }, 1400);
+  }
+  setTimeout(show, 3000);
+  setInterval(show, 10000);
+})();
+
+// ════════════════════════════════════════
+// 5. CLICK FIREWORKS
+// ════════════════════════════════════════
+document.getElementById('universe').addEventListener('click', function (e) {
+  if (e.target.closest('button,canvas,#scroll-hint,#title-wrap')) return;
+  const cx = e.clientX, cy = e.clientY;
+  const COLS = ['#ff3a80','#ff6090','#ffd700','#ff1a6e','#ff69b4','#ffb6c1','#ff8fab'];
+  const N = 30;
+  for (let i = 0; i < N; i++) {
+    const angle = (i / N) * Math.PI * 2 + Math.random() * .4;
+    const spd   = Math.random() * 90 + 40;
+    const sz    = Math.random() * 15 + 7;
+    const col   = COLS[Math.floor(Math.random() * COLS.length)];
+    const dur   = Math.random() * 600 + 650;
+    const ch    = Math.random() > .35 ? '♥' : '✦';
+    const el    = document.createElement('span');
+    el.textContent = ch;
+    el.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;font-size:${sz}px;color:${col};pointer-events:none;z-index:9000;transform:translate(-50%,-50%);text-shadow:0 0 8px ${col};will-change:transform,opacity;transition:transform ${dur}ms ease-out,opacity ${dur}ms ease-out;`;
+    document.body.appendChild(el);
+    const dx = Math.cos(angle) * spd, dy = Math.sin(angle) * spd;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.style.transform = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(0)`;
+      el.style.opacity   = '0';
+    }));
+    setTimeout(() => el.remove(), dur + 80);
+  }
+});
+
+// ════════════════════════════════════════
+// 6. PARALLAX SCROLL
+// ════════════════════════════════════════
+(function () {
+  const starsCnv  = document.getElementById('stars-canvas');
+  const titleWrap = document.getElementById('title-wrap');
+  const heartWrap = document.getElementById('heart-wrap');
+  const scrollHint= document.getElementById('scroll-hint');
+  window.addEventListener('scroll', () => {
+    const sy = window.scrollY;
+    starsCnv.style.transform  = `translateY(${(sy * .28).toFixed(1)}px)`;
+    titleWrap.style.transform = `translateX(-50%) translateY(${(sy * .52).toFixed(1)}px)`;
+    heartWrap.style.transform = `translate(-50%,-50%) translateY(${(sy * .18).toFixed(1)}px)`;
+    scrollHint.style.opacity  = Math.max(0, 1 - sy / 180).toFixed(3);
+  }, { passive: true });
+})();
+
+// ════════════════════════════════════════
+// CURSOR HEART TRAIL
+// ════════════════════════════════════════
+(function () {
+  const HEARTS   = ['♥','♥','♥','♡','♥'];
+  const COLORS   = ['#ff3a80','#ff6090','#ff1a6e','#ff69b4','#ffb6c1','#ff4da6','#ff2d78'];
+  let   lastTime = 0;
+
+  document.addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - lastTime < 38) return;   // ~26 hearts/s max
+    lastTime = now;
+
+    const x    = e.clientX;
+    const y    = e.clientY;
+    const size = Math.random() * 13 + 7;           // 7–20 px
+    const col  = COLORS[Math.floor(Math.random() * COLORS.length)];
+    const char = HEARTS[Math.floor(Math.random() * HEARTS.length)];
+    const dx   = (Math.random() - 0.5) * 52;       // horizontal drift
+    const dy   = -(Math.random() * 65 + 35);       // rise upward
+    const rot  = (Math.random() - 0.5) * 45;       // slight spin
+    const dur  = Math.random() * 500 + 550;        // 550–1050 ms
+
+    const h = document.createElement('span');
+    h.textContent = char;
+    h.style.cssText = `
+      position:fixed;
+      left:${x}px;top:${y}px;
+      font-size:${size}px;
+      line-height:1;
+      color:${col};
+      pointer-events:none;
+      z-index:9998;
+      user-select:none;
+      transform:translate(-50%,-50%) rotate(0deg) scale(1);
+      opacity:1;
+      text-shadow:0 0 6px ${col}, 0 0 14px ${col}88;
+      transition:transform ${dur}ms ease-out, opacity ${dur}ms ease-out;
+      will-change:transform,opacity;
+    `;
+    document.body.appendChild(h);
+
+    // Trigger animation on next paint
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      h.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${rot}deg) scale(0.2)`;
+      h.style.opacity   = '0';
+    }));
+
+    setTimeout(() => h.remove(), dur + 80);
+  });
+})();
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+window.addEventListener('resize', () => {
+  resizeCanvas(); resizeDanceCanvas(); initStars(); buildUniverse();
+});
+
+resizeCanvas();
+resizeDanceCanvas();
+initStars();
+buildUniverse();
+buildTimeline();
+requestAnimationFrame(animate);
+</script>
+<script>
+// ═══════════════════════════════════════
+// MUSIC PLAYER
+// Thêm bản nhạc: { title: 'Tên bài', src: 'tên-file.mp3' }
+// ═══════════════════════════════════════
+(function(){
+  const TRACKS = [
+    { title: 'Bạn Đời', src: 'music/Bạn Đời.mp3' },
+    { title: 'Một Đời', src: 'music/một đời.mp3' },
+    { title: 'Người Im Lặng Gặp Người Hay Nói', src: 'music/Người Im Lặng Gặp Người Hay Nói.mp3' },
+    { title: 'Vì Lỡ Yêu Em Rồi', src: 'music/Vì Lỡ Yêu Em Rồi.mp3' },
+  ];
+
+  const bgm      = document.getElementById('bgm');
+  const btn      = document.getElementById('music-btn');
+  const panel    = document.getElementById('music-panel');
+  const playBtn  = document.getElementById('music-play-btn');
+  const listEl   = document.getElementById('track-list');
+  const npTitle  = document.getElementById('np-title');
+  const npEq     = document.getElementById('np-eq');
+
+  let curIdx   = 0;
+  let playing  = false;
+  let panelOpen= false;
+  let noteTimer= null;
+
+  function setNowPlaying(idx, active) {
+    npTitle.textContent = active ? TRACKS[idx].title : '—';
+    npEq.classList.toggle('active', active);
+  }
+
+  // Build track list
+  TRACKS.forEach((t, i) => {
+    const item = document.createElement('div');
+    item.className = 'track-item' + (i === 0 ? ' active' : '');
+    item.dataset.idx = i;
+    const name = document.createElement('span');
+    name.className = 'ti-name';
+    name.textContent = t.title;
+    item.appendChild(name);
+    item.addEventListener('click', () => selectTrack(i));
+    listEl.appendChild(item);
+  });
+
+  function selectTrack(idx) {
+    curIdx = idx;
+    listEl.querySelectorAll('.track-item').forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+      el.classList.remove('playing-now');
+    });
+    bgm.src = TRACKS[idx].src;
+    if (playing) {
+      bgm.volume = 0;
+      bgm.play().then(() => {
+        fadeIn();
+        listEl.children[idx].classList.add('playing-now');
+        setNowPlaying(idx, true);
+      }).catch(()=>{});
+    }
+  }
+
+  function startPlay() {
+    if (playing) return;
+    if (!bgm.src || bgm.src === window.location.href) bgm.src = TRACKS[curIdx].src;
+    bgm.volume = 0;
+    bgm.play().then(() => {
+      playing = true;
+      btn.textContent = '♬';
+      btn.classList.add('playing');
+      playBtn.textContent = '⏸';
+      listEl.children[curIdx] && listEl.children[curIdx].classList.add('playing-now');
+      setNowPlaying(curIdx, true);
+      fadeIn();
+      scheduleNote();
+    }).catch(()=>{});
+  }
+
+  function stopPlay() {
+    playing = false;
+    clearTimeout(noteTimer);
+    btn.textContent = '♪';
+    btn.classList.remove('playing');
+    playBtn.textContent = '▶';
+    listEl.querySelectorAll('.track-item').forEach(el => el.classList.remove('playing-now'));
+    setNowPlaying(curIdx, false);
+    fadeOut();
+  }
+
+  function fadeIn() {
+    const target = 0.65;
+    const step = () => {
+      bgm.volume = Math.min(bgm.volume + 0.02, target);
+      if (bgm.volume < target) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  function fadeOut() {
+    const step = () => {
+      bgm.volume = Math.max(bgm.volume - 0.03, 0);
+      if (bgm.volume > 0) requestAnimationFrame(step);
+      else bgm.pause();
+    };
+    requestAnimationFrame(step);
+  }
+
+  function scheduleNote() {
+    if (!playing) return;
+    const syms = ['♩','♪','♫','♬'];
+    const note = document.createElement('div');
+    note.className = 'music-note';
+    note.textContent = syms[Math.floor(Math.random() * syms.length)];
+    const rect = btn.getBoundingClientRect();
+    note.style.left = (rect.left + Math.random() * 36 - 8) + 'px';
+    note.style.top  = (rect.top - 8) + 'px';
+    document.body.appendChild(note);
+    setTimeout(() => note.remove(), 2000);
+    noteTimer = setTimeout(scheduleNote, 700 + Math.random() * 700);
+  }
+
+  // Toggle panel
+  btn.addEventListener('click', () => {
+    panelOpen = !panelOpen;
+    panel.classList.toggle('open', panelOpen);
+  });
+
+  // Play/pause button inside panel
+  playBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    playing ? stopPlay() : startPlay();
+  });
+
+  // Close panel on outside click
+  document.addEventListener('click', e => {
+    if (!document.getElementById('music-wrap').contains(e.target)) {
+      panelOpen = false;
+      panel.classList.remove('open');
+    }
+  });
+
+  // Exposed for introBtn auto-start
+  window._musicStart = startPlay;
+
+  // Load first track
+  bgm.src = TRACKS[0].src;
+})();
+
+// ═══════════════════════════════════════
+// FEATURED PHOTO
+// Đổi đường dẫn ảnh đại diện tại đây:
+// ═══════════════════════════════════════
+(function(){
+  const FEATURED = '2026/634363165_1446983080203302_880001041239169798_n.jpg';
+  const img = document.getElementById('featured-img');
+  if (img) img.src = FEATURED;
+})();
+
+// ═══════════════════════════════════════
+// SCROLL ANIMATION — year blocks fade in
+// ═══════════════════════════════════════
+(function(){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in-view'), i * 120);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.year-block').forEach(el => observer.observe(el));
+})();
+
+// ═══════════════════════════════════════
+// SECRET BUTTON
+// ═══════════════════════════════════════
+(function(){
+  const btn     = document.getElementById('secret-btn');
+  const overlay = document.getElementById('secret-overlay');
+  const close   = document.getElementById('secret-close');
+
+  function spawnSparks() {
+    const colors = ['#ff3a80','#ff80c8','#ffb8e0','#c040a0','#ff6aaa'];
+    for (let i = 0; i < 60; i++) {
+      const s = document.createElement('div');
+      s.className = 'sec-spark';
+      const angle = Math.random() * Math.PI * 2;
+      const dist  = 80 + Math.random() * 220;
+      const size  = 4 + Math.random() * 7;
+      s.style.cssText = `
+        width:${size}px;height:${size}px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        left:50%;top:50%;
+        --tx:${Math.cos(angle)*dist}px;
+        --ty:${Math.sin(angle)*dist}px;
+        --d:${.5+Math.random()*.7}s;
+        box-shadow:0 0 6px currentColor;
+      `;
+      overlay.appendChild(s);
+      setTimeout(() => s.remove(), 1300);
+    }
+  }
+
+  btn.addEventListener('click', () => {
+    overlay.classList.add('show');
+    setTimeout(spawnSparks, 100);
+  });
+
+  close.addEventListener('click', () => overlay.classList.remove('show'));
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('show'); });
+})();
+</script>
+</body>
+</html>
