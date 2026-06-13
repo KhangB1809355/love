@@ -307,8 +307,9 @@ body{background:#00000f;color:#fff;font-family:'Raleway',sans-serif;font-weight:
 <!-- LOVE COUNTER (feature 2) -->
 <div id="love-counter">
   <div class="lc-label">Chúng mình đã bên nhau</div>
+  <!-- <div class="lc-days" id="lc-days-beta">0 Ngày</div> -->
+  
   <div class="lc-days" id="lc-days">···</div>
-  <!-- <div class="lc-days" id="lc-days">···</div> -->
   <div class="lc-hms"  id="lc-hms">00:00:00</div>
 </div>
 
@@ -369,8 +370,8 @@ body{background:#00000f;color:#fff;font-family:'Raleway',sans-serif;font-weight:
 <div id="secret-overlay">
   <button id="secret-close">×</button>
   <div id="secret-heart">♥</div>
-  <div id="secret-msg">Thúy Vy ơi, từ ngày đầu tiên nhìn thấy em, Khang đã biết mình sẽ không bỏ cuộc. Em có thể chạy đến tận cùng vũ trụ — Khang vẫn sẽ đuổi theo. Vì với Khang, em là điều duy nhất xứng đáng để theo đuổi mãi mãi.</div>
-  <div id="secret-name">— Khang, người sẽ mãi đuổi theo em —</div>
+  <div id="secret-msg">Thúy Vy ơi, từ ngày đầu tiên nhìn thấy em, anh đã biết mình sẽ không bỏ cuộc. Cho anh cơ hội để theo đuổi em nha. Vì anh rất rất rất thích em.</div>
+  <div id="secret-name">— anh, người sẽ mãi đuổi theo em —</div>
 </div>
 
 <section id="timeline">
@@ -1409,7 +1410,7 @@ function openCardReveal(photoPath, year, clickX, clickY) {
   `;
   const ht = document.createElement('div');
   ht.style.cssText = `font-size:11px;letter-spacing:4px;color:rgba(255,90,160,.92);text-shadow:0 0 12px rgba(255,50,120,.9);`;
-  ht.textContent = '♥ Thúy Vy ♥';
+  // ht.textContent = '♥ Thúy Vy ♥';
   bar.appendChild(ht);
 
   // Corner deco
@@ -1579,17 +1580,18 @@ const IS_LOW_END = IS_MOBILE || navigator.hardwareConcurrency <= 2;
 // ════════════════════════════════════════
 (function () {
   // ← Đổi ngày này thành ngày bắt đầu yêu nhau
-  const START = new Date('2026-05-10T00:00:00');
-  const daysEl = document.getElementById('lc-days');
-  const hmsEl  = document.getElementById('lc-hms');
+  // Ngày bắt đầu yêu nhau (năm, tháng-1, ngày) — giờ địa phương
+  const START    = new Date(2026, 4, 10, 0, 0, 0); // tháng 5 = index 4
+  const daysEl   = document.getElementById('lc-days');
+  const hmsEl    = document.getElementById('lc-hms');
   function tick() {
-    const diff = Date.now() - START;
-    if (diff < 0) return;
+    const diff = Date.now() - START.getTime();
+    if (diff < 0) { daysEl.textContent = '0 ngày'; return; }
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff % 86400000) / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
-    daysEl.textContent = d.toLocaleString() + ' ngày';
+    daysEl.textContent = d + ' ngày';
     hmsEl.textContent  = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
   }
   tick(); setInterval(tick, 1000);
@@ -1770,7 +1772,7 @@ requestAnimationFrame(animate);
 // ═══════════════════════════════════════
 (function(){
   const TRACKS = [
-    { title: 'Bạn Đời', src: 'music/Bạn Đời.mp3' },
+    // { title: 'Bạn Đời', src: 'music/Bạn Đời.mp3' },
     { title: 'Một Đời', src: 'music/một đời.mp3' },
     { title: 'Người Im Lặng Gặp Người Hay Nói', src: 'music/Người Im Lặng Gặp Người Hay Nói.mp3' },
     { title: 'Vì Lỡ Yêu Em Rồi', src: 'music/Vì Lỡ Yêu Em Rồi.mp3' },
@@ -1924,15 +1926,18 @@ requestAnimationFrame(animate);
 // SCROLL ANIMATION — year blocks fade in
 // ═══════════════════════════════════════
 (function(){
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('in-view'), i * 120);
-        observer.unobserve(entry.target);
-      }
+  const blocks = Array.from(document.querySelectorAll('.year-block'));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const idx = blocks.indexOf(entry.target);
+      setTimeout(() => entry.target.classList.add('in-view'), Math.max(0, idx) * 100);
+      observer.unobserve(entry.target);
     });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.year-block').forEach(el => observer.observe(el));
+  }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+  blocks.forEach(el => observer.observe(el));
+  // Fallback: hiện tất cả sau 3s nếu chưa triggered
+  setTimeout(() => blocks.forEach(el => el.classList.add('in-view')), 3000);
 })();
 
 // ═══════════════════════════════════════
