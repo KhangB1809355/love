@@ -279,6 +279,111 @@ body{background:#00000f;color:#fff;font-family:'Raleway',sans-serif;font-weight:
 @keyframes card-float{0%,100%{transform:scale(1) rotateZ(0deg)}50%{transform:scale(1.03) rotateZ(1.5deg)}}
 @keyframes card-shimmer{0%{background-position:-200% 0}100%{background-position:250% 0}}
 .card-glow-pulse{animation:card-float 3s ease-in-out infinite}
+
+/* ── FEATURE 1: "VÌ SAO ANH YÊU EM" ── */
+.sp-planet,.sp-galaxy,.sp-comet{pointer-events:auto !important;cursor:pointer}
+.love-reason-popup{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9600;pointer-events:none;font-family:'Great Vibes',cursive;font-size:clamp(22px,3.8vw,42px);color:rgba(255,205,228,.96);text-shadow:0 0 30px rgba(255,70,140,.8),0 0 8px rgba(255,200,230,.5);text-align:center;white-space:nowrap;animation:lrp-show 3.8s ease-out forwards}
+@keyframes lrp-show{0%{opacity:0;transform:translate(-50%,-50%) scale(.65)}12%{opacity:1;transform:translate(-50%,-50%) scale(1.07)}28%{opacity:1;transform:translate(-50%,-50%) scale(1)}85%{opacity:.9;transform:translate(-50%,-80%)}100%{opacity:0;transform:translate(-50%,-98%)}}
+
+/* ── FEATURE 2: ENVELOPE LETTER ── */
+#love-envelope{position:fixed;bottom:100px;right:24px;z-index:9100;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;pointer-events:auto}
+#env-icon-wrap{width:50px;height:50px;background:rgba(18,5,32,.88);border:1px solid rgba(255,120,170,.38);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 18px rgba(255,80,140,.2);transition:transform .2s,box-shadow .2s;animation:env-float 3.2s ease-in-out infinite}
+#love-envelope:hover #env-icon-wrap{transform:scale(1.1);box-shadow:0 0 28px rgba(255,80,140,.45)}
+@keyframes env-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+#env-lbl{font-family:'Great Vibes',cursive;font-size:11px;color:rgba(255,150,185,.5)}
+#env-modal{position:fixed;inset:0;z-index:99500;background:rgba(2,0,14,.88);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;pointer-events:none}
+#env-modal.open{display:flex;pointer-events:auto}
+#env-paper-wrap{position:relative;max-width:520px;width:92vw;animation:paper-enter .52s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes paper-enter{from{opacity:0;transform:translateY(38px) scale(.93)}to{opacity:1;transform:none}}
+#env-close-btn{position:absolute;top:-14px;right:-12px;width:30px;height:30px;border-radius:50%;background:rgba(255,80,120,.12);border:1px solid rgba(255,100,150,.28);color:rgba(255,170,200,.8);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;transition:background .2s}
+#env-close-btn:hover{background:rgba(255,80,120,.28)}
+#env-paper{background:linear-gradient(155deg,#fff9f3,#fff4e8);border-radius:6px;padding:44px 46px 36px;box-shadow:0 24px 64px rgba(0,0,0,.55),0 2px 0 rgba(255,180,140,.3);position:relative;overflow:hidden}
+#env-paper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#ffb8cc,#ff6d90,#ffb8cc)}
+.ep-from{font-family:'Great Vibes',cursive;font-size:28px;color:#c0556a;margin-bottom:14px}
+.ep-body{font-size:14.5px;line-height:2;color:#4a2030;min-height:80px;white-space:pre-wrap}
+.ep-sign{font-family:'Great Vibes',cursive;font-size:22px;color:#c0566b;margin-top:20px;text-align:right}
+.ep-date{font-size:11px;color:rgba(160,80,100,.45);text-align:right;margin-top:3px;letter-spacing:2px}
+.ep-seal{position:absolute;bottom:18px;left:36px;font-size:32px;opacity:.14}
+
+/* ── FEATURE 3: FUTURE LETTER ── */
+#future-lock-btn{position:fixed;bottom:166px;right:24px;z-index:9100;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;pointer-events:auto}
+#fl-icon-wrap{width:50px;height:50px;background:rgba(14,5,30,.88);border:1px solid rgba(150,110,230,.3);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 16px rgba(140,80,240,.15);transition:transform .2s,box-shadow .2s;animation:fl-idle 5s ease-in-out infinite}
+#future-lock-btn:hover #fl-icon-wrap{transform:scale(1.1);box-shadow:0 0 26px rgba(160,100,255,.4)}
+@keyframes fl-idle{0%,85%,100%{transform:translateY(0) rotate(0deg)}88%{transform:translateY(-3px) rotate(-4deg)}91%{transform:translateY(-3px) rotate(4deg)}94%{transform:translateY(-2px) rotate(-2deg)}97%{transform:translateY(0) rotate(1deg)}}
+#fl-lbl{font-family:'Great Vibes',cursive;font-size:11px;color:rgba(170,140,220,.5)}
+#fl-modal{position:fixed;inset:0;z-index:99400;background:rgba(2,0,14,.88);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;pointer-events:none}
+#fl-box{background:rgba(10,4,24,.92);border:1px solid rgba(140,90,230,.28);border-radius:16px;padding:38px 40px;max-width:440px;width:88vw;text-align:center;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 40px rgba(120,60,220,.08);animation:paper-enter .52s cubic-bezier(.22,1,.36,1) forwards}
+#fl-close-btn{position:absolute;top:12px;right:16px;background:none;border:none;color:rgba(200,160,240,.45);font-size:20px;cursor:pointer}
+#fl-lock-anim{font-size:48px;margin-bottom:10px;display:inline-block}
+#fl-title-txt{font-family:'Cinzel',serif;font-size:14px;color:rgba(200,160,250,.75);letter-spacing:4px;margin-bottom:6px}
+#fl-sub-txt{font-family:'Great Vibes',cursive;font-size:19px;color:rgba(170,130,220,.5);margin-bottom:20px}
+#fl-countdown-box{font-family:'Cinzel',serif;font-size:11.5px;color:rgba(180,140,230,.6);letter-spacing:1px;background:rgba(130,80,220,.07);border:1px solid rgba(130,80,220,.18);border-radius:8px;padding:12px 20px}
+#fl-countdown-val{font-size:18px;color:rgba(210,175,255,.82);margin-top:5px;letter-spacing:2px}
+#fl-open-content{display:none;margin-top:20px;text-align:left}
+#fl-open-content.revealed{display:block}
+.fl-letter{font-family:'Raleway',sans-serif;font-size:13.5px;color:rgba(230,200,255,.82);line-height:1.95;white-space:pre-wrap}
+
+/* ── AURORA ── */
+#aurora-canvas{position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.9}
+
+/* ── 3D TILT ── */
+#featured{perspective:1000px}
+#featured-frame{transform-style:preserve-3d;transition:transform .15s ease-out,box-shadow .15s ease-out;will-change:transform}
+#featured-frame img{transition:transform .15s ease-out}
+#featured-glare{position:absolute;inset:0;border-radius:20px;pointer-events:none;z-index:4;transition:background .15s ease-out}
+
+/* ── PAGE BREATHING ── */
+#breathe-overlay{position:absolute;inset:0;pointer-events:none;z-index:4;background:radial-gradient(ellipse 70% 55% at 50% 55%,rgba(255,50,110,.055) 0%,transparent 65%);animation:pg-breathe 4.2s ease-in-out infinite}
+@keyframes pg-breathe{0%,100%{opacity:.4;transform:scale(.975)}50%{opacity:1;transform:scale(1.025)}}
+.corona{animation:corona-breathe 4.2s ease-in-out infinite !important}
+.corona-2{animation-delay:.4s !important}
+@keyframes corona-breathe{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(.94)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}}
+
+/* ── FIREWORKS CANVAS ── */
+#fw-canvas{position:fixed;inset:0;pointer-events:none;z-index:9800}
+
+/* ── NIGHT MOTH ── */
+.moth{position:fixed;pointer-events:none;z-index:500;transform-origin:center;filter:hue-rotate(210deg) brightness(2.4) saturate(.4);text-shadow:0 0 10px rgba(150,215,255,.92),0 0 26px rgba(120,190,255,.55),0 0 55px rgba(90,165,255,.25),0 0 90px rgba(70,140,255,.12)}
+
+/* ── CURSOR TRAIL ── */
+.cursor-heart{position:fixed;pointer-events:none;z-index:99999;line-height:1;user-select:none;animation:ch-fade var(--d,.8s) ease-out forwards;transform:translate(-50%,-50%)}
+@keyframes ch-fade{0%{opacity:.9;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,calc(-50% - 30px)) scale(.35)}}
+
+/* ── SMS CHAT ── */
+#chat-section{background:linear-gradient(180deg,#00000f,#080018 50%,#00000f);padding:72px 20px 80px;display:flex;flex-direction:column;align-items:center;gap:26px;position:relative}
+#chat-section>h2{font-family:'Cinzel',serif;font-size:clamp(17px,2.8vw,24px);color:rgba(255,130,170,.65);letter-spacing:5px;text-align:center;margin:0}
+#phone-frame{width:min(360px,88vw);background:#0e0c1c;border-radius:36px;border:7px solid #1c1929;box-shadow:0 30px 80px rgba(0,0,0,.65),0 0 0 1px rgba(255,100,160,.1),inset 0 2px 0 rgba(255,255,255,.04);overflow:hidden}
+#chat-top-bar{background:#0b0918;padding:14px 16px 12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.05)}
+#chat-ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ff6d90,#ffb3c6);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 0 12px rgba(255,80,130,.35)}
+#chat-uname{font-family:'Raleway',sans-serif;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.9);line-height:1.25}
+#chat-usub{font-size:10px;color:rgba(255,150,180,.45);letter-spacing:.5px}
+#chat-body{padding:16px 14px 10px;display:flex;flex-direction:column;gap:8px;min-height:360px;max-height:420px;overflow:hidden}
+.cm{max-width:78%;display:flex;opacity:0;transform:translateY(10px);transition:opacity .36s ease,transform .36s ease}
+.cm.show{opacity:1;transform:translateY(0)}
+.cm.k{align-self:flex-end}
+.cm.v{align-self:flex-start}
+.cb{padding:9px 14px;border-radius:18px;font-size:13px;line-height:1.6;word-break:break-word;font-family:'Raleway',sans-serif}
+.cm.k .cb{background:linear-gradient(135deg,#c42068,#e83575);color:#fff;border-bottom-right-radius:5px;box-shadow:0 4px 16px rgba(200,30,100,.28)}
+.cm.v .cb{background:rgba(255,255,255,.09);color:rgba(255,255,255,.82);border-bottom-left-radius:5px;border:1px solid rgba(255,255,255,.07)}
+#chat-seen{font-size:10px;color:rgba(255,100,140,.38);text-align:right;padding:4px 18px 14px;font-family:'Raleway',sans-serif;opacity:0;transition:opacity .5s .2s}
+#chat-seen.show{opacity:1}
+
+/* ── SHOOTING STAR ── */
+.shoot-star{position:absolute;pointer-events:none;z-index:18;height:1.5px;border-radius:2px;transform-origin:left center;background:linear-gradient(to right,transparent,rgba(255,255,240,.88) 55%,#fff);animation:shoot-go var(--dur,.65s) ease-out forwards}
+@keyframes shoot-go{0%{opacity:0;transform:rotate(var(--rot,30deg)) translateX(0)}12%{opacity:1;transform:rotate(var(--rot,30deg)) translateX(0)}100%{opacity:0;transform:rotate(var(--rot,30deg)) translateX(var(--dist,240px))}}
+
+/* ── COUNTDOWN ANNIVERSARY ── */
+.lc-sep{width:80%;height:1px;background:rgba(255,100,160,.18);margin:6px auto}
+.lc-anniv-lbl{font-family:'Great Vibes',cursive;font-size:12px;color:rgba(255,150,185,.5);line-height:1.2}
+#lc-anniv{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.5px;color:rgba(255,130,175,.6);margin-top:1px}
+
+/* ── LIVELINESS: ripple + float-msg ── */
+.u-ripple{position:absolute;border-radius:50%;border:1.5px solid rgba(255,160,210,.55);pointer-events:none;transform:translate(-50%,-50%) scale(0);animation:u-ripple-out 1s ease-out forwards;z-index:15}
+@keyframes u-ripple-out{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
+.u-stardot{position:absolute;width:4px;height:4px;border-radius:50%;pointer-events:none;background:rgba(255,220,240,1);box-shadow:0 0 6px rgba(255,150,200,1);transform:translate(-50%,-50%);animation:u-stardot-fly var(--d,.7s) ease-out forwards;z-index:15}
+@keyframes u-stardot-fly{to{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty)));opacity:0}}
+.float-msg{position:fixed;left:50%;transform:translateX(calc(-50% + var(--ox,0px)));font-family:'Great Vibes',cursive;font-size:clamp(17px,2.8vw,27px);color:rgba(255,170,210,.9);text-shadow:0 0 22px rgba(255,80,150,.55),0 0 6px rgba(255,200,220,.3);pointer-events:none;z-index:9999;white-space:nowrap;bottom:-60px;opacity:0;animation:msg-float-up 5.5s ease-out forwards}
+@keyframes msg-float-up{0%{bottom:-60px;opacity:0}12%{opacity:1}75%{opacity:.85}100%{bottom:52vh;opacity:0}}
 </style>
 </head>
 <body>
@@ -311,6 +416,9 @@ body{background:#00000f;color:#fff;font-family:'Raleway',sans-serif;font-weight:
   
   <div class="lc-days" id="lc-days">···</div>
   <div class="lc-hms"  id="lc-hms">00:00:00</div>
+  <div class="lc-sep"></div>
+  <div class="lc-anniv-lbl">Kỷ niệm 1 năm còn</div>
+  <div id="lc-anniv">···</div>
 </div>
 
 <!-- LOVE QUOTE (feature 4) -->
@@ -338,6 +446,8 @@ body{background:#00000f;color:#fff;font-family:'Raleway',sans-serif;font-weight:
 </div>
 
 <section id="universe">
+  <canvas id="aurora-canvas"></canvas>
+  <div id="breathe-overlay"></div>
   <canvas id="stars-canvas"></canvas>
 
   <!-- <div id="title-wrap">
@@ -360,9 +470,26 @@ body{background:#00000f;color:#fff;font-family:'Raleway',sans-serif;font-weight:
 <section id="featured">
   <div id="featured-frame">
     <img id="featured-img" src="" alt=" Thúy Vy">
+    <div id="featured-glare"></div>
   </div>
   <div id="featured-caption">♥ Thúy Vy ♥</div>
   <div id="featured-sub">VŨ TRỤ CỦA ANH</div>
+</section>
+
+<!-- SMS CHAT -->
+<section id="chat-section">
+  <h2>Tin Nhắn Của Chúng Mình</h2>
+  <div id="phone-frame">
+    <div id="chat-top-bar">
+      <div id="chat-ava">🌸</div>
+      <div>
+        <div id="chat-uname">Thúy Vy ♥</div>
+        <div id="chat-usub">● Online</div>
+      </div>
+    </div>
+    <div id="chat-body"></div>
+    <div id="chat-seen">✓✓ đã xem ♥</div>
+  </div>
 </section>
 
 <!-- SECRET OVERLAY -->
@@ -372,6 +499,45 @@ body{background:#00000f;color:#fff;font-family:'Raleway',sans-serif;font-weight:
   <div id="secret-heart">♥</div>
   <div id="secret-msg">Thúy Vy ơi, từ ngày đầu tiên nhìn thấy em, anh đã biết mình sẽ không bỏ cuộc. Cho anh cơ hội để theo đuổi em nha. Vì anh rất rất rất thích em.</div>
   <div id="secret-name">— anh, người sẽ mãi đuổi theo em —</div>
+</div>
+
+<!-- ENVELOPE LETTER -->
+<div id="love-envelope">
+  <div id="env-icon-wrap">✉</div>
+  <span id="env-lbl">Thư tình</span>
+</div>
+<div id="env-modal">
+  <div id="env-paper-wrap">
+    <button id="env-close-btn">×</button>
+    <div id="env-paper">
+      <div class="ep-from">Gửi Thúy Vy yêu của anh,</div>
+      <div class="ep-body" id="ep-body-text"></div>
+      <div class="ep-sign">— Khang, người mãi yêu em —</div>
+      <div class="ep-date">10 · 05 · 2026</div>
+      <div class="ep-seal">♥</div>
+    </div>
+  </div>
+</div>
+
+<!-- FUTURE LETTER -->
+<div id="future-lock-btn">
+  <div id="fl-icon-wrap">🔒</div>
+  <span id="fl-lbl">Thư tương lai</span>
+</div>
+<div id="fl-modal">
+  <div id="fl-box">
+    <button id="fl-close-btn">×</button>
+    <div id="fl-lock-anim">🔒</div>
+    <div id="fl-title-txt">THƯ KHÓA</div>
+    <div id="fl-sub-txt">Gửi ngày kỷ niệm 1 năm</div>
+    <div id="fl-countdown-box">
+      <div>Sẽ mở vào 10 · 05 · 2027</div>
+      <div id="fl-countdown-val">···</div>
+    </div>
+    <div id="fl-open-content">
+      <div class="fl-letter" id="fl-letter-text"></div>
+    </div>
+  </div>
 </div>
 
 <section id="timeline">
@@ -1546,7 +1712,7 @@ const IS_LOW_END = IS_MOBILE || navigator.hardwareConcurrency <= 2;
 // 1. ROSE PETALS
 // ════════════════════════════════════════
 (function () {
-  const CHARS = ['✿','❀','✾','❁','✽'];
+  const CHARS = ['🌸','♥','✿','♡','🌸','❀','♥','✿','🌸','♡'];
   function spawnPetal() {
     const p   = document.createElement('div');
     p.className = 'petal';
@@ -1569,30 +1735,43 @@ const IS_LOW_END = IS_MOBILE || navigator.hardwareConcurrency <= 2;
       if (t < 1) requestAnimationFrame(frame); else p.remove();
     })(performance.now());
   }
-  if (!IS_MOBILE) {
-    for (let i = 0; i < 6; i++) setTimeout(spawnPetal, i * 400);
-    setInterval(spawnPetal, 1000);
-  }
+  const initCount = IS_MOBILE ? 4 : 8;
+  for (let i = 0; i < initCount; i++) setTimeout(spawnPetal, i * 350);
+  setInterval(spawnPetal, IS_MOBILE ? 2200 : 1100);
 })();
 
 // ════════════════════════════════════════
 // 2. LOVE COUNTER
 // ════════════════════════════════════════
 (function () {
-  // ← Đổi ngày này thành ngày bắt đầu yêu nhau
-  // Ngày bắt đầu yêu nhau (năm, tháng-1, ngày) — giờ địa phương
-  const START    = new Date(2026, 4, 10, 0, 0, 0); // tháng 5 = index 4
+  const START    = new Date(2026, 4, 10, 0, 0, 0);
+  const ANNIV    = new Date(2027, 4, 10, 0, 0, 0);
   const daysEl   = document.getElementById('lc-days');
   const hmsEl    = document.getElementById('lc-hms');
+  const annivEl  = document.getElementById('lc-anniv');
   function tick() {
-    const diff = Date.now() - START.getTime();
-    if (diff < 0) { daysEl.textContent = '0 ngày'; return; }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    daysEl.textContent = d + ' ngày';
-    hmsEl.textContent  = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    const now  = Date.now();
+    const diff = now - START.getTime();
+    if (diff < 0) { daysEl.textContent = '0 ngày'; }
+    else {
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000)  / 60000);
+      const s = Math.floor((diff % 60000)    / 1000);
+      daysEl.textContent = d + ' ngày';
+      hmsEl.textContent  = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    }
+    if (annivEl) {
+      const left = ANNIV.getTime() - now;
+      if (left <= 0) { annivEl.textContent = '🎉 Hôm nay!'; }
+      else {
+        const da = Math.floor(left / 86400000);
+        const ha = Math.floor((left % 86400000) / 3600000);
+        const ma = Math.floor((left % 3600000)  / 60000);
+        const sa = Math.floor((left % 60000)    / 1000);
+        annivEl.textContent = da + 'n ' + String(ha).padStart(2,'0') + ':' + String(ma).padStart(2,'0') + ':' + String(sa).padStart(2,'0');
+      }
+    }
   }
   tick(); setInterval(tick, 1000);
 })();
@@ -1978,6 +2157,590 @@ requestAnimationFrame(animate);
   close.addEventListener('click', () => overlay.classList.remove('show'));
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('show'); });
 })();
+
+/* ── 1. CLICK HEART → BURST ── */
+(function(){
+  const wrap = document.getElementById('heart-wrap');
+  if (!wrap) return;
+  wrap.style.pointerEvents = 'auto';
+  wrap.style.cursor = 'pointer';
+  wrap.addEventListener('click', function(){
+    const cnv = document.getElementById('heart-canvas');
+    if (!cnv) return;
+    const rect = cnv.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top  + rect.height / 2;
+    // pulse scale
+    cnv.style.transition = 'transform .15s ease';
+    cnv.style.transform = 'scale(1.18)';
+    setTimeout(() => { cnv.style.transform = 'scale(1)'; }, 160);
+    // burst 36 particles from canvas center in page→canvas coords
+    const pcx = 150, pcy = 133;
+    const n = 36;
+    for (let k = 0; k < n; k++) {
+      const angle = (k / n) * Math.PI * 2 + Math.random() * 0.2;
+      const speed = 1.8 + Math.random() * 3.2;
+      const vx = Math.cos(angle) * speed;
+      const vy = Math.sin(angle) * speed;
+      const sz = 3 + Math.random() * 5;
+      const life = 55 + Math.floor(Math.random() * 45);
+      const cIdx = Math.floor(Math.random() * 64);
+      if (typeof emitHeartParticle === 'function') emitHeartParticle(pcx, pcy, vx, vy, sz, life, cIdx);
+    }
+  });
+})();
+
+/* ── 2. CLICK UNIVERSE BG → RIPPLE RINGS + STAR DOTS ── */
+(function(){
+  const uni = document.getElementById('universe');
+  if (!uni) return;
+  uni.addEventListener('click', function(e){
+    const t = e.target;
+    if (t.closest('#heart-wrap') || t.closest('.photo-item') || t.closest('.sp-item') || t.closest('#music-wrap') || t.closest('#secret-btn') || t.closest('#love-counter')) return;
+    const uRect = uni.getBoundingClientRect();
+    const rx = e.clientX - uRect.left + uni.scrollLeft;
+    const ry = e.clientY - uRect.top  + uni.scrollTop;
+    const sizes = [60, 120, 200];
+    const delays = [0, 120, 240];
+    sizes.forEach((sz, i) => {
+      setTimeout(() => {
+        const r = document.createElement('div');
+        r.className = 'u-ripple';
+        r.style.cssText = `left:${rx}px;top:${ry}px;width:${sz}px;height:${sz}px;animation-duration:${.8 + i*.15}s`;
+        uni.appendChild(r);
+        setTimeout(() => r.remove(), 1200);
+      }, delays[i]);
+    });
+    const dots = 8;
+    for (let k = 0; k < dots; k++) {
+      const d = document.createElement('div');
+      d.className = 'u-stardot';
+      const angle = (k / dots) * Math.PI * 2;
+      const dist = 55 + Math.random() * 50;
+      d.style.cssText = `left:${rx}px;top:${ry}px;--tx:${Math.cos(angle)*dist}px;--ty:${Math.sin(angle)*dist}px;--d:${.5+Math.random()*.5}s`;
+      uni.appendChild(d);
+      setTimeout(() => d.remove(), 1100);
+    }
+  });
+})();
+
+/* ── A. "VÌ SAO ANH YÊU EM" — click orbiting objects ── */
+(function(){
+  const REASONS = [
+    'Vì em cười là cả vũ trụ sáng lên ✦',
+    'Vì giọng em nghe mà thương lắm ♥',
+    'Vì em làm anh muốn trở nên tốt hơn',
+    'Vì mỗi khi bên em, anh thấy bình yên',
+    'Vì em là điều đẹp nhất anh từng gặp ✦',
+    'Vì nụ cười của em không ai sánh được',
+    'Vì em luôn xuất hiện đúng lúc anh cần',
+    'Vì bên em, anh hiểu thế nào là hạnh phúc',
+    'Vì em là người anh chọn mỗi ngày ♥',
+    'Vì ánh mắt em khiến tim anh bỏ nhịp',
+    'Vì có em, cuộc đời anh có nghĩa hơn ✦',
+    'Vì em — và chỉ em mà thôi ♥',
+  ];
+  const container = document.getElementById('orbit-container');
+  if (!container) return;
+  container.addEventListener('click', e => {
+    const el = e.target.closest('.sp-planet,.sp-galaxy,.sp-comet');
+    if (!el) return;
+    const div = document.createElement('div');
+    div.className = 'love-reason-popup';
+    div.textContent = REASONS[Math.floor(Math.random() * REASONS.length)];
+    document.body.appendChild(div);
+    setTimeout(() => div.remove(), 4200);
+  });
+})();
+
+/* ── B. ENVELOPE LETTER ── */
+(function(){
+  const btn     = document.getElementById('love-envelope');
+  const modal   = document.getElementById('env-modal');
+  const closeEl = document.getElementById('env-close-btn');
+  const bodyEl  = document.getElementById('ep-body-text');
+  if (!btn || !modal) return;
+
+  const LETTER = 'Thúy Vy ơi,\n\nAnh không giỏi nói chuyện hoa mỹ — nhưng anh biết một điều chắc chắn: từ ngày có em, mọi thứ đều trở nên có màu sắc hơn. Em là người khiến anh muốn trở thành phiên bản tốt hơn của chính mình — không phải vì áp lực, mà vì anh muốn xứng đáng được đứng bên cạnh em.\n\nCảm ơn em đã chọn anh trong vô vàn lựa chọn. Anh sẽ không để em hối hận điều đó đâu. Anh hứa.\n\nYêu em rất nhiều.';
+  let typed = false;
+
+  function openModal() {
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.pointerEvents = 'auto';
+    if (!typed) { typed = true; setTimeout(() => typeIn(bodyEl, LETTER, 26), 420); }
+  }
+  function closeModal() {
+    modal.style.display = 'none';
+    modal.style.pointerEvents = 'none';
+  }
+  function typeIn(el, text, speed) {
+    el.textContent = ''; let i = 0;
+    const t = setInterval(() => {
+      if (i >= text.length) { clearInterval(t); return; }
+      const ch = text[i++];
+      if (ch === '\n') el.appendChild(document.createElement('br'));
+      else el.insertAdjacentText('beforeend', ch);
+    }, speed);
+  }
+
+  btn.addEventListener('click', openModal);
+  if (closeEl) closeEl.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+})();
+
+/* ── C. FUTURE LETTER (locked until 10/5/2027) ── */
+(function(){
+  const btn      = document.getElementById('future-lock-btn');
+  const modal    = document.getElementById('fl-modal');
+  const closeEl  = document.getElementById('fl-close-btn');
+  const valEl    = document.getElementById('fl-countdown-val');
+  const lockAnim = document.getElementById('fl-lock-anim');
+  const openDiv  = document.getElementById('fl-open-content');
+  const letterEl = document.getElementById('fl-letter-text');
+  if (!btn || !modal) return;
+
+  const ANNIV = new Date(2027, 4, 10, 0, 0, 0);
+  const SECRET = 'Thúy Vy ơi,\n\nMột năm rồi — nhanh quá, hay là chậm quá, anh cũng không biết nữa. Chỉ biết là mỗi ngày bên em đều là một ngày anh muốn sống thật tốt.\n\nHôm nay là ngày kỷ niệm 1 năm của chúng mình. Anh không có quà đắt tiền hay màn cầu hôn hoành tráng. Nhưng anh có một điều: anh ở đây — và anh sẽ tiếp tục ở đây, mãi mãi.\n\nYêu em — hôm nay, ngày mai, và mãi mãi về sau. ♥';
+  let unlocked = false, typed = false;
+
+  function pad(n) { return String(n).padStart(2,'0'); }
+
+  function tick() {
+    const left = ANNIV.getTime() - Date.now();
+    if (left <= 0) {
+      if (!unlocked) { unlocked = true; if(lockAnim) lockAnim.textContent = '🔓'; }
+      if (valEl) valEl.textContent = '🎉 Hôm nay!';
+    } else {
+      const d = Math.floor(left / 86400000);
+      const h = pad(Math.floor((left % 86400000) / 3600000));
+      const m = pad(Math.floor((left % 3600000)  / 60000));
+      const s = pad(Math.floor((left % 60000)    / 1000));
+      if (valEl) valEl.textContent = d + ' ngày ' + h + ':' + m + ':' + s;
+    }
+  }
+  tick(); setInterval(tick, 1000);
+
+  function openFl() {
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.pointerEvents = 'auto';
+    if (unlocked && !typed) {
+      typed = true; openDiv.style.display = 'block';
+      let i = 0; letterEl.textContent = '';
+      const t = setInterval(() => {
+        if (i >= SECRET.length) { clearInterval(t); return; }
+        const ch = SECRET[i++];
+        if (ch === '\n') letterEl.appendChild(document.createElement('br'));
+        else letterEl.insertAdjacentText('beforeend', ch);
+      }, 30);
+    }
+  }
+  function closeFl() {
+    modal.style.display = 'none';
+    modal.style.pointerEvents = 'none';
+  }
+  btn.addEventListener('click', openFl);
+  if (closeEl) closeEl.addEventListener('click', closeFl);
+  modal.addEventListener('click', e => { if (e.target === modal) closeFl(); });
+})();
+
+/* ── 4. SHOOTING STARS ── */
+(function(){
+  const uni = document.getElementById('universe');
+  if (!uni) return;
+  function spawn() {
+    const W = uni.offsetWidth, H = uni.offsetHeight;
+    const el = document.createElement('div');
+    el.className = 'shoot-star';
+    const x   = Math.random() * W * 0.75;
+    const y   = Math.random() * H * 0.55;
+    const rot = 18 + Math.random() * 28;
+    const w   = 70 + Math.random() * 90;
+    const dist= 160 + Math.random() * 220;
+    const dur = (.45 + Math.random() * .35).toFixed(2);
+    el.style.cssText = `width:${w}px;top:${y}px;left:${x}px;--rot:${rot}deg;--dist:${dist}px;--dur:${dur}s`;
+    uni.appendChild(el);
+    setTimeout(() => el.remove(), parseFloat(dur) * 1000 + 300);
+    setTimeout(spawn, 3500 + Math.random() * 5000);
+  }
+  setTimeout(spawn, 1500 + Math.random() * 2500);
+})();
+
+/* ── 5. PARALLAX MOUSE ── */
+(function(){
+  const uni   = document.getElementById('universe');
+  const orbit = document.getElementById('orbit-container');
+  const hwrap = document.getElementById('heart-wrap');
+  if (!uni || !orbit) return;
+  let tx=0, ty=0, mx=0, my=0;
+  uni.addEventListener('mousemove', e => {
+    const r  = uni.getBoundingClientRect();
+    mx = (e.clientX - r.left  - r.width  / 2) / (r.width  / 2);
+    my = (e.clientY - r.top   - r.height / 2) / (r.height / 2);
+  });
+  uni.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+  (function loop(){
+    tx += (mx - tx) * 0.045;
+    ty += (my - ty) * 0.045;
+    orbit.style.transform = `translate(${tx*20}px,${ty*14}px)`;
+    if (hwrap) hwrap.style.transform = `translate(calc(-50% + ${tx*9}px),calc(-50% + ${ty*6}px))`;
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ── 3. PERIODIC FLOATING LOVE MESSAGES ── */
+(function(){
+  const msgs = [
+    'Anh yêu em, Thúy Vy ♥',
+    'Em là vũ trụ của anh ✦',
+    'Mãi mãi bên nhau nhé ~',
+    'Em đẹp lắm, biết không?',
+    'Anh nhớ em nhiều lắm ♡',
+    'Cùng nhau đến cuối trời ✨',
+    'Em là điều kỳ diệu nhất ♥',
+    'Yêu em mỗi ngày một hơn ~',
+    'Em làm tim anh tan chảy rồi',
+    'Khang & Thúy Vy — mãi mãi ♥',
+  ];
+  function spawnMsg() {
+    const el = document.createElement('div');
+    el.className = 'float-msg';
+    const ox = (Math.random() - 0.5) * Math.min(window.innerWidth * 0.5, 260);
+    el.style.setProperty('--ox', ox + 'px');
+    el.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+    setTimeout(spawnMsg, 20000 + Math.random() * 15000);
+  }
+  setTimeout(spawnMsg, 18000 + Math.random() * 10000);
+})();
+
+/* ── CURSOR TRAIL ── */
+(function(){
+  const SYM = ['♥','♡','♥','✦','♥'];
+  const COL = ['rgba(255,80,140,.85)','rgba(255,120,165,.78)','rgba(255,160,195,.7)','rgba(255,55,118,.9)'];
+  let last = 0;
+  document.addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - last < 38) return;
+    last = now;
+    const el = document.createElement('span');
+    el.className = 'cursor-heart';
+    const sz = 9 + Math.random() * 9;
+    const d  = (.5 + Math.random() * .5).toFixed(2);
+    el.textContent = SYM[Math.floor(Math.random() * SYM.length)];
+    el.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;font-size:${sz}px;color:${COL[Math.floor(Math.random()*COL.length)]};--d:${d}s`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), d * 1000 + 120);
+  });
+})();
+
+/* ── RING PULSE TO MUSIC ── */
+(function(){
+  const bgm = document.getElementById('bgm');
+  if (!bgm) return;
+  let ac, analyser, connected = false;
+  function connect() {
+    if (connected) return;
+    try {
+      ac = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = ac.createAnalyser();
+      analyser.fftSize = 128;
+      analyser.smoothingTimeConstant = 0.82;
+      const src = ac.createMediaElementSource(bgm);
+      src.connect(analyser);
+      analyser.connect(ac.destination);
+      connected = true;
+    } catch(e) {}
+  }
+  bgm.addEventListener('play', () => { connect(); if (ac && ac.state === 'suspended') ac.resume(); });
+  const buf = new Uint8Array(64);
+  (function pulse() {
+    if (connected && analyser && !bgm.paused) {
+      analyser.getByteFrequencyData(buf);
+      document.querySelectorAll('.ring-circle').forEach((r, i) => {
+        const val = buf[Math.min(i * 5, 28)] / 255;
+        r.style.transform = `translate(-50%,-50%) scale(${1 + val * 0.06})`;
+      });
+    }
+    requestAnimationFrame(pulse);
+  })();
+})();
+
+/* ── SMS CHAT ── */
+(function(){
+  const body = document.getElementById('chat-body');
+  const seen = document.getElementById('chat-seen');
+  const section = document.getElementById('chat-section');
+  if (!body || !section) return;
+  const MSGS = [
+    { f:'k', t:'Vy ơi, em có biết không...' },
+    { f:'v', t:'Biết gì vậy anh 👀' },
+    { f:'k', t:'Hôm nay nhìn em cười, tim anh đập loạn hết rồi 😵' },
+    { f:'v', t:'Trời ơi anh lại bắt đầu rồi 😳' },
+    { f:'k', t:'Em là điều tốt nhất xảy ra với anh đó. Thật.' },
+    { f:'v', t:'...' },
+    { f:'v', t:'Em không biết nói gì nữa 🥺' },
+    { f:'k', t:'Thì đừng nói gì. Chỉ cần ở đây bên anh là đủ rồi ♥' },
+    { f:'v', t:'♥' },
+    { f:'k', t:'Yêu em nhiều lắm, Thúy Vy.' },
+  ];
+  let triggered = false;
+  function runChat() {
+    if (triggered) return; triggered = true;
+    MSGS.forEach((msg, i) => {
+      setTimeout(() => {
+        const wrap = document.createElement('div');
+        wrap.className = 'cm ' + msg.f;
+        const bub = document.createElement('div');
+        bub.className = 'cb';
+        bub.textContent = msg.t;
+        wrap.appendChild(bub);
+        body.appendChild(wrap);
+        requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add('show')));
+        body.scrollTop = body.scrollHeight;
+        if (i === MSGS.length - 1 && seen) setTimeout(() => seen.classList.add('show'), 400);
+      }, i * 950 + 500);
+    });
+  }
+  new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => { if (e.isIntersecting) { runChat(); obs.disconnect(); } });
+  }, { threshold: 0.25 }).observe(section);
+})();
+
+/* ── FIREWORKS ── */
+(function(){
+  const cnv = document.getElementById('fw-canvas');
+  if (!cnv) return;
+  const ctx = cnv.getContext('2d');
+  function resize() { cnv.width = innerWidth; cnv.height = innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+
+  const COLORS = ['#ff6d90','#ffb3c6','#ff4a7a','#ffd6e0','#ff8fb0','#ffdd80','#c084fc','#a5f3fc','#86efac'];
+  const parts = [];
+
+  function burst(ox, oy) {
+    const n = 72 + Math.floor(Math.random() * 24);
+    const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+    const col2 = COLORS[Math.floor(Math.random() * COLORS.length)];
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const spd = 2.5 + Math.random() * 5.5;
+      parts.push({
+        x: ox, y: oy,
+        vx: Math.cos(a) * spd, vy: Math.sin(a) * spd - 1,
+        color: Math.random() < .5 ? col : col2,
+        alpha: 1, life: 0,
+        maxLife: 55 + Math.random() * 40,
+        size: 1.8 + Math.random() * 2.8,
+        tail: Math.random() < .35
+      });
+    }
+  }
+
+  let rafId = null;
+  function loop() {
+    ctx.clearRect(0, 0, cnv.width, cnv.height);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      p.x  += p.vx; p.y  += p.vy;
+      p.vy += 0.09; p.vx *= 0.97;
+      p.life++;
+      p.alpha = Math.max(0, 1 - p.life / p.maxLife);
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      if (p.tail) {
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y, p.size * 2.5, p.size * .7, Math.atan2(p.vy, p.vx), 0, Math.PI * 2);
+      } else {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      ctx.restore();
+      if (p.alpha <= 0) parts.splice(i, 1);
+    }
+    if (parts.length > 0) rafId = requestAnimationFrame(loop);
+    else rafId = null;
+  }
+
+  function fire(ox, oy) {
+    burst(ox, oy);
+    setTimeout(() => burst(ox + (Math.random()-.5)*120, oy - 40 - Math.random()*60), 160);
+    setTimeout(() => burst(ox + (Math.random()-.5)*120, oy - 40 - Math.random()*60), 320);
+    setTimeout(() => burst(ox + (Math.random()-.5)*80,  oy - 80 - Math.random()*40), 480);
+    if (!rafId) rafId = requestAnimationFrame(loop);
+  }
+
+  const lc = document.getElementById('love-counter');
+  if (lc) {
+    lc.style.cursor = 'pointer';
+    lc.style.pointerEvents = 'auto';
+    lc.addEventListener('click', () => {
+      const r = lc.getBoundingClientRect();
+      fire(r.left + r.width / 2, r.top + r.height / 2);
+    });
+  }
+})();
+
+/* ── SKY BY TIME ── */
+(function(){
+  const uni = document.getElementById('universe');
+  if (!uni) return;
+  const h = new Date().getHours();
+  const SKIES = [
+    { h:0,  bg:'radial-gradient(ellipse at 50% 40%,#05001a 0%,#020009 60%,#000005 100%)' },
+    { h:5,  bg:'radial-gradient(ellipse at 50% 65%,#160a32 0%,#09021c 50%,#030009 100%)' },
+    { h:6,  bg:'radial-gradient(ellipse at 50% 72%,#2e1248 0%,#1a0830 35%,#07001c 72%,#020009 100%)' },
+    { h:8,  bg:'radial-gradient(ellipse at 50% 58%,#1c0c3e 0%,#0e0428 52%,#05001c 100%)' },
+    { h:12, bg:'radial-gradient(ellipse at 50% 48%,#140c30 0%,#0a0322 55%,#040010 100%)' },
+    { h:17, bg:'radial-gradient(ellipse at 50% 62%,#32103c 0%,#1e071e 28%,#09001c 68%,#03000a 100%)' },
+    { h:19, bg:'radial-gradient(ellipse at 50% 54%,#22082e 0%,#110320 45%,#050012 100%)' },
+    { h:21, bg:'radial-gradient(ellipse at 50% 38%,#09001a 0%,#050010 58%,#010006 100%)' },
+  ];
+  let chosen = SKIES[0].bg;
+  for (let i = SKIES.length - 1; i >= 0; i--) {
+    if (h >= SKIES[i].h) { chosen = SKIES[i].bg; break; }
+  }
+  uni.style.background = chosen;
+})();
+
+/* ── AURORA BOREALIS ── */
+(function(){
+  const cnv = document.getElementById('aurora-canvas');
+  if (!cnv) return;
+  const ctx = cnv.getContext('2d');
+  const uni = document.getElementById('universe');
+
+  function resize() {
+    cnv.width  = uni.offsetWidth  || window.innerWidth;
+    cnv.height = uni.offsetHeight || window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const BANDS = [
+    { r:80,  g:220, b:180, phase:0,    speed:.00018, amp:38, yFrac:.10, thick:110, alpha:.13 },
+    { r:120, g:80,  b:255, phase:1.8,  speed:.00013, amp:28, yFrac:.17, thick: 90, alpha:.10 },
+    { r:0,   g:200, b:255, phase:3.2,  speed:.00022, amp:32, yFrac:.07, thick: 80, alpha:.09 },
+    { r:180, g:100, b:255, phase:0.6,  speed:.00010, amp:22, yFrac:.22, thick: 70, alpha:.08 },
+  ];
+
+  function draw(t) {
+    ctx.clearRect(0, 0, cnv.width, cnv.height);
+    const W = cnv.width, H = cnv.height;
+
+    BANDS.forEach(b => {
+      const baseY = H * b.yFrac;
+      ctx.beginPath();
+      for (let x = 0; x <= W; x += 4) {
+        const wave = Math.sin(x * 0.008 + b.phase + t * b.speed * 1000) * b.amp
+                   + Math.sin(x * 0.004 + b.phase * 1.3 + t * b.speed * 700) * b.amp * .4;
+        const y = baseY + wave;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.lineTo(W, 0); ctx.lineTo(0, 0); ctx.closePath();
+
+      const grad = ctx.createLinearGradient(0, baseY - b.amp, 0, baseY + b.thick);
+      grad.addColorStop(0,   `rgba(${b.r},${b.g},${b.b},0)`);
+      grad.addColorStop(.35, `rgba(${b.r},${b.g},${b.b},${b.alpha})`);
+      grad.addColorStop(.7,  `rgba(${b.r},${b.g},${b.b},${(b.alpha*.5).toFixed(3)})`);
+      grad.addColorStop(1,   `rgba(${b.r},${b.g},${b.b},0)`);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ── NIGHT MOTHS — permanent looping ── */
+(function(){
+  const MOTHS = [
+    { sz:26, rxF:.30, ryF:.22, spd:.0055, flapSpd:.20, fadeDelay:2000 },
+    { sz:22, rxF:.24, ryF:.17, spd:.0038, flapSpd:.17, fadeDelay:3500 },
+    { sz:20, rxF:.36, ryF:.26, spd:.0068, flapSpd:.23, fadeDelay:5000 },
+  ];
+
+  MOTHS.forEach((cfg, idx) => {
+    const el = document.createElement('span');
+    el.className = 'moth';
+    el.textContent = '🦋';
+    el.style.cssText = `font-size:${cfg.sz}px;opacity:0;position:fixed;z-index:500;pointer-events:none;`;
+    document.body.appendChild(el);
+
+    setTimeout(() => { el.style.transition = 'opacity 2.5s'; el.style.opacity = '1'; }, cfg.fadeDelay);
+
+    let t  = (idx / MOTHS.length) * Math.PI * 2; // evenly spread on path
+    let ft = idx * 20;
+
+    (function frame(){
+      t  += cfg.spd;
+      ft += 1;
+
+      const W = window.innerWidth, H = window.innerHeight;
+      const cx = W * 0.5,  cy = H * 0.42;
+      const Rx = W * cfg.rxF, Ry = H * cfg.ryF;
+
+      const x = cx + Rx * Math.sin(t)     + Math.sin(t * 0.31 + idx) * Rx * 0.12;
+      const y = cy + Ry * Math.sin(t * 2) + Math.cos(t * 0.47 + idx) * Ry * 0.18;
+
+      const flapY  = 0.70 + Math.abs(Math.sin(ft * cfg.flapSpd)) * 0.30;
+      const tilt   = Math.cos(t) > 0 ? 11 : -11;
+      const wobble = Math.sin(ft * 0.07 + idx) * 5;
+
+      el.style.left      = (x - cfg.sz / 2) + 'px';
+      el.style.top       = (y - cfg.sz / 2) + 'px';
+      el.style.transform = `rotate(${tilt + wobble}deg) scaleY(${flapY.toFixed(3)})`;
+
+      requestAnimationFrame(frame);
+    })();
+  });
+})();
+
+/* ── 3D TILT FEATURED PHOTO ── */
+(function(){
+  const section = document.getElementById('featured');
+  const frame   = document.getElementById('featured-frame');
+  const glare   = document.getElementById('featured-glare');
+  if (!section || !frame) return;
+
+  let tx = 0, ty = 0, gx = 50, gy = 50;
+  let active = false, rafId = null;
+
+  section.addEventListener('mouseenter', () => { active = true; });
+  section.addEventListener('mouseleave', () => {
+    active = false;
+    tx = 0; ty = 0; gx = 50; gy = 50;
+    frame.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+    if (glare) glare.style.background = 'transparent';
+  });
+
+  section.addEventListener('mousemove', e => {
+    const r  = frame.getBoundingClientRect();
+    const cx = r.left + r.width  / 2;
+    const cy = r.top  + r.height / 2;
+    tx = ((e.clientY - cy) / (r.height / 2)) * -10;
+    ty = ((e.clientX - cx) / (r.width  / 2)) *  10;
+    gx = ((e.clientX - r.left) / r.width)  * 100;
+    gy = ((e.clientY - r.top)  / r.height) * 100;
+  });
+
+  (function loop(){
+    if (active) {
+      frame.style.transform = `perspective(1000px) rotateX(${tx.toFixed(2)}deg) rotateY(${ty.toFixed(2)}deg) scale3d(1.04,1.04,1.04)`;
+      if (glare) glare.style.background =
+        `radial-gradient(circle at ${gx.toFixed(1)}% ${gy.toFixed(1)}%,rgba(255,255,255,.18) 0%,transparent 55%)`;
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
 </script>
+<canvas id="fw-canvas"></canvas>
 </body>
 </html>
